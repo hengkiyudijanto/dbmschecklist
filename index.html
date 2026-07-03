@@ -981,6 +981,70 @@ function handleRequest(e) {
     addressObj: null
   };
 
+  // --- MANAJEMEN MODAL & HISTORY (PENCEGAH TOMBOL BACK) ---
+  const ALL_MODALS = ['taskCompletionModal', 'recordModal', 'historyModal', 'manageModal', 'settingsModal', 'customConfirmModal', 'photoViewerModal'];
+
+  function showModalWithHistory(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    
+    modal.classList.remove('hidden');
+    
+    // Animasi ekstra untuk Photo Viewer
+    if (modalId === 'photoViewerModal') {
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        const img = document.getElementById('photoViewerImg');
+        if (img) img.classList.remove('scale-95');
+      }, 10);
+    }
+    
+    // Simpan history agar tombol Back HP berfungsi menutup modal
+    history.pushState({ modal: modalId }, '');
+  }
+
+  function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    if (modalId === 'photoViewerModal') {
+      modal.classList.add('opacity-0');
+      const img = document.getElementById('photoViewerImg');
+      if (img) img.classList.add('scale-95');
+      const vid = document.getElementById('videoViewerVid');
+      if (vid) vid.pause();
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        if (img) img.src = '';
+        if (vid) vid.src = '';
+      }, 300);
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
+
+  function safeCloseModal(modalId) {
+    if (history.state && history.state.modal === modalId) {
+      history.back(); // Memanggil popstate otomatis yang akan menutupnya
+    } else {
+      hideModal(modalId);
+    }
+  }
+
+  // Mendengarkan tombol "Back" fisik di HP
+  window.addEventListener('popstate', (e) => {
+    const activeModalInHistory = e.state ? e.state.modal : null;
+    ALL_MODALS.forEach(id => {
+      const m = document.getElementById(id);
+      // Tutup semua modal yang bukan merupakan modal aktif di History saat ini
+      if (m && !m.classList.contains('hidden') && id !== activeModalInHistory) {
+        hideModal(id);
+      }
+    });
+  });
+  // --------------------------------------------------------
+
   function startGpsTracking() {
     if ("geolocation" in navigator) {
       navigator.geolocation.watchPosition(
@@ -1047,16 +1111,16 @@ function handleRequest(e) {
       yesBtn.textContent = "Ya, Lanjutkan";
     }
     customConfirmCallback = onConfirm;
-    document.getElementById('customConfirmModal').classList.remove('hidden');
+    showModalWithHistory('customConfirmModal');
   }
 
   document.getElementById('customConfirmCancel').addEventListener('click', () => { 
-    document.getElementById('customConfirmModal').classList.add('hidden'); 
+    safeCloseModal('customConfirmModal'); 
     customConfirmCallback = null; 
   });
   
   document.getElementById('customConfirmYes').addEventListener('click', () => { 
-    document.getElementById('customConfirmModal').classList.add('hidden'); 
+    safeCloseModal('customConfirmModal'); 
     const cb = customConfirmCallback; 
     customConfirmCallback = null; 
     if (cb) cb(); 
@@ -1766,7 +1830,7 @@ function handleRequest(e) {
       document.getElementById('inputUploadAll').value = '';
       renderCompletionPreviews();
     }
-    document.getElementById('taskCompletionModal').classList.remove('hidden');
+    showModalWithHistory('taskCompletionModal');
   }
   
   window.handleTaskRowClick = handleTaskRowClick;
@@ -1825,7 +1889,7 @@ function handleRequest(e) {
     state.activities.unshift(newActivity);
     saveState();
     showToast(`✓ "${task.KEGIATAN}" diselesaikan!`, 'success');
-    document.getElementById('taskCompletionModal').classList.add('hidden');
+    safeCloseModal('taskCompletionModal');
     render();
     
     if (state.settings.webAppUrl) {
@@ -1875,7 +1939,7 @@ function handleRequest(e) {
     state.activities[existingActivityIndex].fotos = [...completionState.fotos];
     saveState();
     showToast(`✓ Catatan berhasil diperbarui!`, 'success');
-    document.getElementById('taskCompletionModal').classList.add('hidden');
+    safeCloseModal('taskCompletionModal');
     render();
     
     if (state.settings.webAppUrl) {
@@ -1912,7 +1976,7 @@ function handleRequest(e) {
       saveState();
       
       showToast(`Status selesai "${task.KEGIATAN}" telah dibatalkan.`, 'info');
-      document.getElementById('taskCompletionModal').classList.add('hidden');
+      safeCloseModal('taskCompletionModal');
       render();
       
       if (state.settings.webAppUrl && removedActivity) {
@@ -2099,7 +2163,7 @@ function handleRequest(e) {
     document.getElementById('recordLoadingAlert').classList.add('hidden'); 
     document.getElementById('recordMediaProcessing').classList.add('hidden');
     refreshRecordCategoryOptions(false);
-    document.getElementById('recordModal').classList.remove('hidden');
+    showModalWithHistory('recordModal');
     renderKegiatanDropdown(); 
     renderRecordPreviews();
   }
@@ -2178,7 +2242,7 @@ function handleRequest(e) {
     } catch (err) { 
       showToast('Tersimpan lokal. Jaringan sibuk.', 'warning'); 
     } finally {
-      document.getElementById('recordModal').classList.add('hidden');
+      safeCloseModal('recordModal');
       isSavingRecord = false; 
       saveBtn.disabled = false; 
       saveBtn.innerHTML = originalText; 
@@ -2515,11 +2579,11 @@ function handleRequest(e) {
   });
 
   document.getElementById('recordBtn').addEventListener('click', openRecordModal);
-  document.querySelector('.close-record').addEventListener('click', () => document.getElementById('recordModal').classList.add('hidden'));
-  document.getElementById('cancelRecord').addEventListener('click', () => document.getElementById('recordModal').classList.add('hidden'));
-  document.querySelector('.close-completion').addEventListener('click', () => document.getElementById('taskCompletionModal').classList.add('hidden'));
-  document.getElementById('cancelCompletion').addEventListener('click', () => document.getElementById('taskCompletionModal').classList.add('hidden'));
-  document.getElementById('closeCompletionView').addEventListener('click', () => document.getElementById('taskCompletionModal').classList.add('hidden'));
+  document.querySelector('.close-record').addEventListener('click', () => safeCloseModal('recordModal'));
+  document.getElementById('cancelRecord').addEventListener('click', () => safeCloseModal('recordModal'));
+  document.querySelector('.close-completion').addEventListener('click', () => safeCloseModal('taskCompletionModal'));
+  document.getElementById('cancelCompletion').addEventListener('click', () => safeCloseModal('taskCompletionModal'));
+  document.getElementById('closeCompletionView').addEventListener('click', () => safeCloseModal('taskCompletionModal'));
 
   document.getElementById('refreshRecordBtn').addEventListener('click', async () => {
     if (!state.settings.webAppUrl) { showToast('Konfigurasi URL Google Sheets belum diatur.', 'warning'); return; }
@@ -2543,8 +2607,8 @@ function handleRequest(e) {
   });
 
   document.getElementById('goManageFromRecord').addEventListener('click', () => { 
-    document.getElementById('recordModal').classList.add('hidden'); 
-    document.getElementById('manageBtn').click(); 
+    safeCloseModal('recordModal'); 
+    setTimeout(() => document.getElementById('manageBtn').click(), 50);
   });
   
   document.getElementById('recordCategory').addEventListener('change', e => { 
@@ -2567,36 +2631,36 @@ function handleRequest(e) {
 
   document.getElementById('historyBtn').addEventListener('click', () => { 
     renderHistory(); 
-    document.getElementById('historyModal').classList.remove('hidden'); 
+    showModalWithHistory('historyModal'); 
   });
   document.querySelector('.close-history').addEventListener('click', () => { 
-    document.getElementById('historyModal').classList.add('hidden'); 
+    safeCloseModal('historyModal'); 
   });
   
   document.getElementById('manageBtn').addEventListener('click', () => { 
     renderManageTasks(); 
-    document.getElementById('manageModal').classList.remove('hidden'); 
+    showModalWithHistory('manageModal'); 
   });
   document.getElementById('goManageBtn').addEventListener('click', () => { 
     document.getElementById('manageBtn').click(); 
   });
   document.querySelector('.close-manage').addEventListener('click', () => { 
-    document.getElementById('manageModal').classList.add('hidden'); 
+    safeCloseModal('manageModal'); 
   });
   document.getElementById('addMasterTaskBtn').addEventListener('click', handleAddTask);
   document.getElementById('newTaskName').addEventListener('keydown', e => { if (e.key === 'Enter') handleAddTask(); });
 
   document.getElementById('settingsBtn').addEventListener('click', () => {
-    document.getElementById('settingsModal').classList.remove('hidden');
     document.getElementById('scriptCode').textContent = APPS_SCRIPT_CODE;
     document.getElementById('webAppUrl').value = state.settings.webAppUrl || '';
     document.getElementById('connectionStatus').innerHTML = '';
     document.getElementById('diagnosticArea').classList.add('hidden');
     switchToGoogleSheetTab(); 
     updateConnectionUI();
+    showModalWithHistory('settingsModal');
   });
   document.querySelector('.close-settings').addEventListener('click', () => { 
-    document.getElementById('settingsModal').classList.add('hidden'); 
+    safeCloseModal('settingsModal'); 
   });
 
   document.getElementById('copyScriptBtn').addEventListener('click', async () => {
@@ -2632,7 +2696,7 @@ function handleRequest(e) {
     await syncAll(); 
     render(); 
     renderCabangs();
-    setTimeout(() => { document.getElementById('settingsModal').classList.add('hidden'); }, 1200);
+    setTimeout(() => { safeCloseModal('settingsModal'); }, 1200);
   });
 
   document.getElementById('disconnectSettings').addEventListener('click', () => {
@@ -2685,24 +2749,8 @@ function handleRequest(e) {
     });
   });
 
-  // Modal Backdrop Clicks
-  ['recordModal', 'historyModal', 'manageModal', 'settingsModal', 'taskCompletionModal'].forEach(id => { 
-    document.getElementById(id).addEventListener('click', e => { 
-      if (e.target.id === id) document.getElementById(id).classList.add('hidden'); 
-    }); 
-  });
-  
-  // Escape Key Listener to dismiss modals
-  document.addEventListener('keydown', e => { 
-    if (e.key !== 'Escape') return; 
-    ['recordModal', 'historyModal', 'manageModal', 'settingsModal', 'taskCompletionModal', 'customConfirmModal'].forEach(id => { 
-      document.getElementById(id).classList.add('hidden'); 
-    }); 
-  });
-
-  // LIGHTBOX & BACK BUTTON LOGIC (Pencegah Keluar Aplikasi)
+  // LIGHTBOX & BACK BUTTON LOGIC
   window.openMediaViewer = function(url) {
-    const modal = document.getElementById('photoViewerModal');
     const img = document.getElementById('photoViewerImg');
     const vid = document.getElementById('videoViewerVid');
     const dl = document.getElementById('downloadPhotoBtn');
@@ -2722,55 +2770,33 @@ function handleRequest(e) {
       img.src = url;
     }
 
-    modal.classList.remove('hidden');
-    // Beri jeda 10ms agar animasi CSS transisi muncul perlahan
-    setTimeout(() => {
-      modal.classList.remove('opacity-0');
-      img.classList.remove('scale-95');
-    }, 10);
-
-    // Mendaftarkan status ke Browser History agar tombol Back HP berfungsi menutup foto
-    history.pushState({ modal: 'photoViewer' }, '');
-  };
-
-  window.closePhotoViewer = function() {
-    const modal = document.getElementById('photoViewerModal');
-    const img = document.getElementById('photoViewerImg');
-    const vid = document.getElementById('videoViewerVid');
-
-    modal.classList.add('opacity-0');
-    img.classList.add('scale-95');
-    vid.pause();
-
-    setTimeout(() => {
-      modal.classList.add('hidden');
-      img.src = '';
-      vid.src = '';
-    }, 300);
+    showModalWithHistory('photoViewerModal');
   };
 
   document.getElementById('closePhotoViewerBtn').addEventListener('click', (e) => {
     e.preventDefault();
-    if (history.state && history.state.modal === 'photoViewer') {
-      history.back(); // Ini akan memicu event 'popstate' di bawah
+    safeCloseModal('photoViewerModal');
+  });
+
+  // Modal Backdrop Clicks (Klik layar gelap untuk tutup menu)
+  ALL_MODALS.forEach(id => { 
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('click', e => { 
+        if (e.target.id === id || (id === 'photoViewerModal' && e.target.id === 'photoViewerImg')) {
+           safeCloseModal(id);
+        }
+      }); 
+    }
+  });
+
+  // Escape Key Listener untuk Keyboard PC/Laptop
+  document.addEventListener('keydown', e => { 
+    if (e.key !== 'Escape') return; 
+    if (history.state && history.state.modal) {
+      safeCloseModal(history.state.modal);
     } else {
-      window.closePhotoViewer();
-    }
-  });
-
-  // Menutup foto jika area layar hitam di luar foto ditekan
-  document.getElementById('photoViewerModal').addEventListener('click', (e) => {
-    if (e.target.id === 'photoViewerModal' || e.target.id === 'photoViewerImg') {
-      if (history.state && history.state.modal === 'photoViewer') history.back();
-      else window.closePhotoViewer();
-    }
-  });
-
-  // Event Listener khusus menangkap tombol fisik "Back" di HP (Android/iOS Swipe)
-  window.addEventListener('popstate', (e) => {
-    const photoModal = document.getElementById('photoViewerModal');
-    if (!photoModal.classList.contains('hidden')) {
-      window.closePhotoViewer();
+      ALL_MODALS.forEach(id => hideModal(id));
     }
   });
 
