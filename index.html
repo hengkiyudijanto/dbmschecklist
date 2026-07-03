@@ -201,6 +201,7 @@
 
   <div class="max-w-5xl mx-auto px-4 py-6 md:py-10 relative">
     
+    <!-- HEADER -->
     <header class="mb-8 fade-in">
       <div class="flex items-center justify-between flex-wrap gap-4 bg-slate-900/40 p-5 rounded-2xl border border-white/5">
         <div class="flex items-start gap-4">
@@ -259,6 +260,7 @@
       </div>
     </header>
 
+    <!-- METRICS DASHBOARD -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 fade-in">
       <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
         <div class="absolute right-3 top-3 opacity-10 text-3xl">📋</div>
@@ -388,17 +390,17 @@
           <div class="flex-1"><div class="font-semibold">Mengompresi & menyiapkan file media...</div></div>
         </div>
 
-        <!-- Touch Targets for Capture -->
+        <!-- Touch Targets for Capture (Terkait input type file tersembunyi) -->
         <div class="grid grid-cols-3 gap-2" id="mediaSelectMenu">
-          <label for="inputCamPhoto" id="btnMediaCamPhoto" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
+          <label for="inputCamPhoto" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
             <span class="text-lg mb-1">📷</span>
             <span class="text-[10px] font-bold text-slate-300">Ambil Foto</span>
           </label>
-          <label for="inputCamVideo" id="btnMediaCamVideo" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
+          <label for="inputCamVideo" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
             <span class="text-lg mb-1">🎥</span>
             <span class="text-[10px] font-bold text-slate-300">Rekam Video</span>
           </label>
-          <label for="inputUploadAll" id="btnMediaUpload" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
+          <label for="inputUploadAll" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
             <span class="text-lg mb-1">📁</span>
             <span class="text-[10px] font-bold text-slate-300">Buka Berkas</span>
           </label>
@@ -698,7 +700,7 @@
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="fixed bottom-6 right-6 glass rounded-2xl px-5 py-3.5 text-xs font-bold hidden shadow-2xl max-w-sm border-l-4 transition-all duration-300"></div>
 
-  <!-- INPUT FILE (Hidden) - Menggunakan class sr-only (Screen Reader Only) untuk kompabilitas trigger natif pada Safari/iOS -->
+  <!-- INPUT FILE SECARA OFF-SCREEN (Mencegah pemblokiran klik otomatis di iOS/Android Safari) -->
   <input type="file" id="inputCamPhoto" accept="image/*" capture="environment" class="sr-only" />
   <input type="file" id="inputCamVideo" accept="video/*" capture="environment" class="sr-only" />
   <input type="file" id="inputUploadAll" accept="image/*,video/*" class="sr-only" />
@@ -1321,7 +1323,7 @@ function handleRequest(e) {
             ctx.drawImage(img, 0, 0, w, h);
 
             // ==========================================================
-            // LOGIKA WATERMARK PREMIUM 3-BLOK BTN (Sama dengan clqmobile.html)
+            // LOGIKA WATERMARK PREMIUM 3-BLOK BTN
             // ==========================================================
             const watermarkHeight = canvas.height * 0.28; 
             const blockHeight = watermarkHeight / 3; 
@@ -1329,7 +1331,6 @@ function handleRequest(e) {
             const padX = canvas.width * 0.04; 
             const fontFamily = 'Plus Jakarta Sans, sans-serif'; 
 
-            // Pengaturan efek bayangan agar teks terlihat sangat kontras dan tajam
             ctx.shadowColor = 'rgba(0,0,0,0.9)'; 
             ctx.shadowBlur = 6; 
             ctx.shadowOffsetX = 2; 
@@ -1345,16 +1346,13 @@ function handleRequest(e) {
               ctx.fillText(text, x, y);
             };
 
-            // Menggambar latar belakang bar transparan gelap agar teks terbaca jelas
             ctx.shadowColor = 'transparent';
             ctx.fillStyle = 'rgba(11, 15, 25, 0.65)';
             ctx.fillRect(0, startY, canvas.width, watermarkHeight);
             ctx.shadowColor = 'rgba(0,0,0,0.9)';
 
-            // Blok 1: Menggambar Logo dari Drive sesuai link yang diberikan
-            // Link asal: https://drive.google.com/file/d/1eTSXoESbvumQ6bhq_3UeGqiKdRawFYWG/view
-            // Dikonversi ke format direct-thumbnail agar diizinkan oleh Canvas CORS
-            const logoUrl = "https://drive.google.com/thumbnail?id=1eTSXoESbvumQ6bhq_3UeGqiKdRawFYWG&sz=w500";
+            // Blok 1: Menggambar Logo BTN dari Drive (Dengan Proxy Anti-CORS)
+            const logoUrl = "https://wsrv.nl/?url=https://drive.google.com/thumbnail?id=1eTSXoESbvumQ6bhq_3UeGqiKdRawFYWG";
             const logoImg = new Image(); 
             logoImg.crossOrigin = "Anonymous"; 
             
@@ -2107,6 +2105,10 @@ function handleRequest(e) {
     });
   }
 
+  document.getElementById('recordPhotoDropLabel').addEventListener('click', (e) => { 
+    if (e.target.id === 'photoInput') return; 
+    document.getElementById('photoInput').click(); 
+  });
   document.getElementById('photoInput').addEventListener('change', e => { 
     handleLegacyMediaInput(e.target.files[0]); 
     e.target.value = ''; 
