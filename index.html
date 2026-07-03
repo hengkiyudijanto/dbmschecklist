@@ -697,6 +697,18 @@
     </div>
   </div>
 
+  <!-- MODAL: PHOTO VIEWER (IN-APP GALERI) -->
+  <div id="photoViewerModal" class="hidden fixed inset-0 z-[99999] bg-black/95 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 opacity-0">
+    <div class="absolute top-4 right-4 flex gap-3 z-50">
+      <a id="downloadPhotoBtn" href="#" target="_blank" class="w-10 h-10 bg-slate-800/60 hover:bg-slate-700 rounded-full flex items-center justify-center text-white text-xl transition shadow-lg" title="Buka Asli / Unduh">⬇️</a>
+      <button id="closePhotoViewerBtn" class="w-10 h-10 bg-red-500/80 hover:bg-red-500 rounded-full flex items-center justify-center text-white text-2xl font-bold transition shadow-lg">&times;</button>
+    </div>
+    <div class="w-full h-full flex items-center justify-center p-2 md:p-8 overflow-hidden">
+      <img id="photoViewerImg" src="" class="max-w-full max-h-full object-contain transition-transform duration-300 scale-95 cursor-zoom-out" />
+      <video id="videoViewerVid" src="" controls class="max-w-full max-h-full hidden object-contain rounded-xl shadow-2xl"></video>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="fixed bottom-6 right-6 glass rounded-2xl px-5 py-3.5 text-xs font-bold hidden shadow-2xl max-w-sm border-l-4 transition-all duration-300"></div>
 
@@ -1685,7 +1697,7 @@ function handleRequest(e) {
           : `<img src="${escapeAttr(url)}" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-800" onerror="this.outerHTML='<div class=&quot;w-20 h-20 sm:w-24 sm:h-24 border border-slate-800 rounded-xl flex items-center justify-center text-xs text-red-400 bg-slate-900&quot;>⚠️ Error</div>'" />`;
         
         return `
-          <div class="relative flex-shrink-0 mt-1 mr-2 cursor-pointer" onclick="window.open('${escapeAttr(url)}', '_blank')">
+          <div class="relative flex-shrink-0 mt-1 mr-2 cursor-pointer" onclick="window.openMediaViewer('${escapeAttr(url)}'); event.stopPropagation();">
             ${bg}
             <button class="absolute -top-1.5 -right-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-lg text-xs font-bold" onclick="removeCompletionMedia(${i}); event.stopPropagation();">&times;</button>
           </div>`;
@@ -1936,7 +1948,7 @@ function handleRequest(e) {
           : `<img src="${escapeAttr(url)}" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-800" />`;
         
         return `
-          <div class="relative flex-shrink-0 mt-1 mr-2 cursor-pointer" onclick="window.open('${escapeAttr(url)}', '_blank')">
+          <div class="relative flex-shrink-0 mt-1 mr-2 cursor-pointer" onclick="window.openMediaViewer('${escapeAttr(url)}'); event.stopPropagation();">
             ${bg}
             <button type="button" class="absolute -top-1.5 -right-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-lg text-xs font-bold" onclick="removeRecordMedia(${i}); event.stopPropagation();">&times;</button>
           </div>`;
@@ -2200,12 +2212,12 @@ function handleRequest(e) {
           const isVideo = isVideoMedia(url);
           if (isVideo) {
             return `
-              <div class="w-14 h-14 sm:w-16 sm:h-16 border border-slate-700 bg-black flex-shrink-0 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer relative" onclick="window.open('${escapeAttr(url)}', '_blank')">
+              <div class="w-14 h-14 sm:w-16 sm:h-16 border border-slate-700 bg-black flex-shrink-0 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer relative" onclick="window.openMediaViewer('${escapeAttr(url)}')">
                 <span class="text-lg absolute z-10 drop-shadow">🎥</span>
                 <video src="${escapeAttr(url)}#t=0.1" preload="metadata" class="w-full h-full object-cover opacity-60"></video>
               </div>`;
           } else { 
-            return `<img src="${escapeAttr(url)}" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-slate-700 flex-shrink-0 object-cover cursor-pointer" onclick="window.open('${escapeAttr(url)}', '_blank')" onerror="this.outerHTML='<div class=&quot;w-14 h-14 sm:w-16 sm:h-16 border border-slate-700 rounded-xl flex items-center justify-center text-red-400 bg-slate-900 text-xs&quot;>⚠️ Error</div>'" />`; 
+            return `<img src="${escapeAttr(url)}" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-slate-700 flex-shrink-0 object-cover cursor-pointer" onclick="window.openMediaViewer('${escapeAttr(url)}')" onerror="this.outerHTML='<div class=&quot;w-14 h-14 sm:w-16 sm:h-16 border border-slate-700 rounded-xl flex items-center justify-center text-red-400 bg-slate-900 text-xs&quot;>⚠️ Error</div>'" />`; 
           }
         }).join('') + '</div>';
       }
@@ -2686,6 +2698,80 @@ function handleRequest(e) {
     ['recordModal', 'historyModal', 'manageModal', 'settingsModal', 'taskCompletionModal', 'customConfirmModal'].forEach(id => { 
       document.getElementById(id).classList.add('hidden'); 
     }); 
+  });
+
+  // LIGHTBOX & BACK BUTTON LOGIC (Pencegah Keluar Aplikasi)
+  window.openMediaViewer = function(url) {
+    const modal = document.getElementById('photoViewerModal');
+    const img = document.getElementById('photoViewerImg');
+    const vid = document.getElementById('videoViewerVid');
+    const dl = document.getElementById('downloadPhotoBtn');
+
+    dl.href = url;
+
+    if (isVideoMedia(url)) {
+      img.classList.add('hidden');
+      vid.classList.remove('hidden');
+      vid.src = url;
+      vid.play().catch(e => console.warn("Auto-play diblokir browser:", e));
+    } else {
+      vid.classList.add('hidden');
+      vid.pause();
+      vid.src = '';
+      img.classList.remove('hidden');
+      img.src = url;
+    }
+
+    modal.classList.remove('hidden');
+    // Beri jeda 10ms agar animasi CSS transisi muncul perlahan
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      img.classList.remove('scale-95');
+    }, 10);
+
+    // Mendaftarkan status ke Browser History agar tombol Back HP berfungsi menutup foto
+    history.pushState({ modal: 'photoViewer' }, '');
+  };
+
+  window.closePhotoViewer = function() {
+    const modal = document.getElementById('photoViewerModal');
+    const img = document.getElementById('photoViewerImg');
+    const vid = document.getElementById('videoViewerVid');
+
+    modal.classList.add('opacity-0');
+    img.classList.add('scale-95');
+    vid.pause();
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      img.src = '';
+      vid.src = '';
+    }, 300);
+  };
+
+  document.getElementById('closePhotoViewerBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (history.state && history.state.modal === 'photoViewer') {
+      history.back(); // Ini akan memicu event 'popstate' di bawah
+    } else {
+      window.closePhotoViewer();
+    }
+  });
+
+  // Menutup foto jika area layar hitam di luar foto ditekan
+  document.getElementById('photoViewerModal').addEventListener('click', (e) => {
+    if (e.target.id === 'photoViewerModal' || e.target.id === 'photoViewerImg') {
+      if (history.state && history.state.modal === 'photoViewer') history.back();
+      else window.closePhotoViewer();
+    }
+  });
+
+  // Event Listener khusus menangkap tombol fisik "Back" di HP (Android/iOS Swipe)
+  window.addEventListener('popstate', (e) => {
+    const photoModal = document.getElementById('photoViewerModal');
+    if (!photoModal.classList.contains('hidden')) {
+      window.closePhotoViewer();
+    }
   });
 
   // Initialize
