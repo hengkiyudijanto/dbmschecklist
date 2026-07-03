@@ -2,16 +2,8 @@
 <html lang="id" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DBMS Daily Checklist - Bank BTN</title>
-  
-  <!-- PWA Meta Tags -->
-  <meta name="theme-color" content="#0b0f19" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="DBMS Checklist" />
-  <link rel="apple-touch-icon" href="https://placehold.co/192x192/002d72/ffffff?text=BTN" />
-
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.0.3/index.min.css" />
 
@@ -136,65 +128,2685 @@
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
     }
     
-    /* ... existing code (dropdown, alert, transitions) ... */
-    .single-dropdown-trigger { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 10px 14px; text-align: left; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 46px; transition: all 0.2s; }
+    /* Custom Dropdown Styling */
+    .single-dropdown-trigger {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 10px 14px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 46px;
+      transition: all 0.2s;
+    }
     .single-dropdown-trigger:hover:not(:disabled) { border-color: #4f46e5; }
     .single-dropdown-trigger.open { border-color: #4f46e5; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
     .single-dropdown-trigger:disabled { opacity: 0.5; cursor: not-allowed; }
-    .single-dropdown-menu { position: absolute; top: 100%; left: 0; right: 0; background: #0f172a; border: 1px solid #4f46e5; border-top: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; max-height: 260px; overflow-y: auto; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
-    .single-dropdown-item { padding: 10px 14px; cursor: pointer; display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid rgba(51, 65, 85, 0.4); transition: background 0.15s; }
+    
+    .single-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #0f172a;
+      border: 1px solid #4f46e5;
+      border-top: none;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      max-height: 260px;
+      overflow-y: auto;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .single-dropdown-item {
+      padding: 10px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+      transition: background 0.15s;
+    }
     .single-dropdown-item:last-child { border-bottom: none; }
     .single-dropdown-item:hover { background: rgba(79, 70, 229, 0.15); }
     .single-dropdown-item.selected { background: rgba(16, 185, 129, 0.1); }
-    .alert-box { padding: 12px 16px; border-radius: 12px; font-size: 13px; display: flex; align-items: flex-start; gap: 10px; }
+    
+    .alert-box {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
     .alert-warning { background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); color: #fde047; }
     .alert-info { background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); color: #93c5fd; }
     .alert-success { background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: #86efac; }
     .alert-error { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); color: #fca5a5; }
+
+    /* Custom Transitions */
     .fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    
     .scale-in { animation: scaleIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30 antialiased">
 
-  <!-- ... existing content ... -->
-  <!-- (Body structure remains identical, just ensuring all IDs match) -->
-  
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        const swBlob = new Blob([
-          `const CACHE_NAME = 'dbms-checklist-v1';
-           const ASSETS = ['/', '/index.html'];
-           self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS))));
-           self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(res => res || fetch(e.request))));`
-        ], {type: 'application/javascript'});
+  <div class="max-w-5xl mx-auto px-4 py-6 md:py-10 relative">
+    
+    <!-- HEADER -->
+    <header class="mb-8 fade-in">
+      <div class="flex items-center justify-between flex-wrap gap-4 bg-slate-900/40 p-5 rounded-2xl border border-white/5">
+        <div class="flex items-start gap-4">
+          <!-- Logo Container -->
+          <div class="h-12 bg-white rounded-xl px-3 flex items-center justify-center shadow-lg border border-slate-200 shrink-0">
+            <img src="https://drive.google.com/thumbnail?id=1sdbS2eKxEgaw-W9LFKrE2g6ZTsE8bcLp&sz=w500" onerror="this.src='https://placehold.co/120x60/ffffff/002d72?text=BTN'; this.onerror=null;" alt="Bank BTN" class="h-8 object-contain" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-200 to-amber-300 bg-clip-text text-transparent">DBMS Daily Checklist</h1>
+              <span class="text-[10px] bg-indigo-950 border border-indigo-500/30 text-indigo-300 font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">v1.2 Premium</span>
+            </div>
+            
+            <!-- Branch Selector -->
+            <div id="activeBranchContainer" class="flex items-center gap-2 mt-2 bg-slate-950/80 border border-slate-800 px-3 py-1.5 rounded-xl w-fit shadow-inner">
+              <span class="text-xs">🏢</span>
+              <select id="activeBranchSelector" class="bg-transparent text-xs font-bold text-slate-300 focus:outline-none cursor-pointer pr-1 max-w-[280px] sm:max-w-[400px] truncate">
+                <!-- Loaded via JS -->
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Panel -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="recordBtn" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-emerald-950/30">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            Catat Aktivitas
+          </button>
+          <button id="historyBtn" class="glass px-4 py-2.5 rounded-xl text-xs md:text-sm hover:bg-slate-800 transition flex items-center gap-2">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            Riwayat
+          </button>
+          <button id="manageBtn" class="glass px-4 py-2.5 rounded-xl text-xs md:text-sm hover:bg-slate-800 transition flex items-center gap-2">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+            Kelola
+          </button>
+          <button id="settingsBtn" class="glass px-4 py-2.5 rounded-xl text-xs md:text-sm hover:bg-indigo-950 hover:border-indigo-500/40 transition flex items-center gap-2 border border-transparent">
+            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            Setup
+          </button>
+          <button id="syncBtn" class="glass px-4 py-2.5 rounded-xl text-xs md:text-sm hover:bg-slate-800 transition flex items-center gap-2">
+            <span id="syncIcon" class="inline-block">🔄</span>
+            <span id="syncText">Sinkron</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STATUS BAR & DATE -->
+      <div class="flex items-center justify-between flex-wrap gap-2 mt-4 px-1">
+        <div id="statusBar" class="text-xs text-slate-500 flex items-center gap-2">
+          <span id="statusDot" class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+          <span id="statusText" class="font-medium">Mode lokal</span>
+        </div>
+        <p class="text-slate-400 text-xs font-semibold flex items-center gap-1.5" id="dateDisplay"></p>
+      </div>
+    </header>
+
+    <!-- METRICS DASHBOARD -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 fade-in">
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
+        <div class="absolute right-3 top-3 opacity-10 text-3xl">📋</div>
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Total Tugas</div>
+        <div class="text-3xl font-extrabold text-white" id="statTotal">0</div>
+      </div>
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden border-b-2 border-b-emerald-500/50">
+        <div class="absolute right-3 top-3 opacity-10 text-3xl">✨</div>
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Selesai</div>
+        <div class="text-3xl font-extrabold text-emerald-400" id="statDone">0</div>
+      </div>
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden border-b-2 border-b-amber-500/50">
+        <div class="absolute right-3 top-3 opacity-10 text-3xl">⏳</div>
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Belum</div>
+        <div class="text-3xl font-extrabold text-amber-400" id="statPending">0</div>
+      </div>
+      <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Progress</div>
+          <div class="text-xl font-bold text-slate-300" id="progressPercentage">0%</div>
+        </div>
+        <div class="relative w-14 h-14">
+          <svg class="progress-ring" width="56" height="56">
+            <circle cx="28" cy="28" r="24" stroke="rgba(255,255,255,0.05)" stroke-width="4.5" fill="none"/>
+            <circle id="progressCircle" cx="28" cy="28" r="24" stroke="url(#blueIndigoGrad)" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
+            <defs>
+              <linearGradient id="blueIndigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6"/>
+                <stop offset="100%" stop-color="#6366f1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold" id="progressText">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE FILTER TABS -->
+    <div class="flex gap-2 mb-4 bg-slate-900/40 border border-slate-800 p-2 rounded-2xl fade-in">
+      <button class="tab-btn flex-1 py-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-200" data-freq="daily">🌅 Harian</button>
+      <button class="tab-btn flex-1 py-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-200" data-freq="weekly">📅 Mingguan</button>
+      <button class="tab-btn flex-1 py-3 rounded-xl font-bold text-xs md:text-sm transition-all duration-200" data-freq="monthly">🗓️ Bulanan</button>
+    </div>
+
+    <!-- DETAILED SEARCH & FILTER CONSOLE -->
+    <div class="glass-card rounded-2xl p-4 mb-4 space-y-3 fade-in">
+      <div class="flex flex-col md:flex-row gap-3 items-center">
+        <!-- Search input -->
+        <div class="relative w-full md:flex-1">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </span>
+          <input type="text" id="taskSearchInput" placeholder="Cari checklist kegiatan atau spesifikasi..." class="w-full bg-slate-900/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 placeholder-slate-500 transition" />
+        </div>
+        <!-- Status Filter Segmented Control -->
+        <div class="flex bg-slate-900/80 border border-slate-800 rounded-xl p-1 shrink-0 w-full md:w-auto">
+          <button class="status-filter-btn flex-1 md:flex-none px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 transition" data-status="all">Semua</button>
+          <button class="status-filter-btn flex-1 md:flex-none px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 transition" data-status="pending">Belum</button>
+          <button class="status-filter-btn flex-1 md:flex-none px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 transition" data-status="completed">Selesai</button>
+        </div>
+      </div>
+      
+      <!-- Category Chips Container -->
+      <div id="categoryFilter" class="flex gap-2 flex-wrap pt-1"></div>
+    </div>
+
+    <!-- CHECKLIST LIST CONTAINER -->
+    <div class="glass rounded-2xl p-5 mb-4 fade-in">
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+        <h2 class="font-extrabold text-lg text-slate-100 flex items-center gap-2" id="listTitle">Tugas Harian</h2>
+        <span class="text-xs text-indigo-300 opacity-80 italic hidden md:inline-flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Klik kartu tugas untuk update detail / lampiran media.
+        </span>
+      </div>
+      
+      <div id="taskList" class="space-y-3 scrollbar max-h-[600px] overflow-y-auto pr-1"></div>
+      
+      <!-- EMPTY STATE -->
+      <div id="emptyState" class="hidden text-center py-16 text-slate-500 bg-slate-900/10 rounded-xl border border-dashed border-slate-800">
+        <div class="text-5xl mb-4">📓</div>
+        <p class="text-slate-300 font-semibold mb-1">Tidak ada tugas ditemukan</p>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto mb-4">Coba sesuaikan pencarian Anda atau tambahkan daftar tugas master baru di panel kelola.</p>
+        <button id="goManageBtn" class="text-indigo-400 hover:text-indigo-300 text-sm font-semibold underline">Kelola tugas master →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TASK COMPLETION -->
+  <div id="taskCompletionModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-6 max-w-lg w-full max-h-[92vh] overflow-y-auto scrollbar scale-in">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+        <div>
+          <h2 class="text-lg font-extrabold text-slate-100" id="completionModalHeaderTitle">📝 Selesaikan Tugas</h2>
+          <p class="text-xs text-slate-400 mt-0.5" id="completionModalHeaderSubtitle">Isi progres pengerjaan dan lampirkan bukti foto/video</p>
+        </div>
+        <button class="close-completion text-slate-400 hover:text-white text-2xl transition">&times;</button>
+      </div>
+
+      <div class="mb-5 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+        <div id="completionTaskName" class="text-base font-bold text-slate-100">Nama Kegiatan</div>
+        <div class="flex gap-2 mt-2" id="completionTaskMeta">
+          <span class="cat-badge bg-indigo-950 text-indigo-300 border border-indigo-500/30" id="completionTaskCategory">Kategori</span>
+          <span class="cat-badge bg-slate-800 text-slate-300" id="completionTaskFreq">Harian</span>
+        </div>
+        <p class="text-xs text-slate-400 mt-3 italic bg-slate-950 p-2.5 rounded-lg border border-slate-900" id="completionTaskSpec"></p>
+      </div>
+
+      <div class="mb-4">
+        <label class="text-xs text-slate-300 mb-1.5 block font-bold">Detail / Catatan Progress <span class="text-red-400">*</span></label>
+        <textarea id="completionDetail" rows="3" placeholder="Deskripsikan pekerjaan atau catat kendala/status di sini..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 resize-none text-slate-200" required></textarea>
+      </div>
+
+      <!-- MEDIA MANAGEMENT -->
+      <div class="mb-5">
+        <div class="flex justify-between items-center mb-2">
+          <label class="text-xs text-slate-300 font-bold">Bukti Media (Foto atau Video)</label>
+          <span class="text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded-full" id="completionPhotoCountBadge">0 / 3</span>
+        </div>
+
+        <div id="completionMediaPreviewArea" class="hidden mb-3">
+          <div id="mediaPlaceholder" class="flex gap-2 overflow-x-auto pb-2 scrollbar"></div>
+        </div>
+
+        <div id="completionMediaUploading" class="hidden mb-3 alert-box alert-info">
+          <span class="spinner"></span>
+          <div class="flex-1"><div class="font-semibold">Mengompresi & menyiapkan file media...</div></div>
+        </div>
+
+        <!-- Touch Targets for Capture (Terkait input type file tersembunyi) -->
+        <div class="grid grid-cols-3 gap-2" id="mediaSelectMenu">
+          <label for="inputCamPhoto" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
+            <span class="text-lg mb-1">📷</span>
+            <span class="text-[10px] font-bold text-slate-300">Ambil Foto</span>
+          </label>
+          <label for="inputCamVideo" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
+            <span class="text-lg mb-1">🎥</span>
+            <span class="text-[10px] font-bold text-slate-300">Rekam Video</span>
+          </label>
+          <label for="inputUploadAll" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl text-center transition flex flex-col items-center justify-center cursor-pointer">
+            <span class="text-lg mb-1">📁</span>
+            <span class="text-[10px] font-bold text-slate-300">Buka Berkas</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ACTIONS FOR EDIT OR NEW -->
+      <div class="flex gap-2 border-t border-slate-800 pt-4" id="completionActions">
+        <button id="cancelCompletion" class="flex-1 bg-slate-900 hover:bg-slate-800 py-3 rounded-xl font-bold text-xs transition text-slate-300">❌ Batal</button>
+        <button id="saveCompletion" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 py-3 rounded-xl font-bold text-xs text-white transition shadow-lg shadow-emerald-950/20">💾 Simpan & Selesai</button>
+      </div>
+      
+      <div class="hidden flex-col gap-2 border-t border-slate-800 pt-4" id="viewOnlyActions">
+        <div class="flex gap-2 w-full">
+          <button id="closeCompletionView" class="flex-1 bg-slate-900 hover:bg-slate-800 py-3 rounded-xl font-bold text-xs transition text-slate-300">Tutup</button>
+          <button id="btnUpdateCompletionActivity" class="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 py-3 rounded-xl font-bold text-xs text-white transition shadow-lg">💾 Perbarui Catatan</button>
+        </div>
+        <button id="btnDeleteCompletionActivity" class="w-full bg-red-950/40 hover:bg-red-950 border border-red-900/30 py-3 rounded-xl font-bold text-xs text-red-400 transition">🗑️ Hapus Status Selesai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RECORD ACTIVITY (MANUAL DROPDOWN INPUT) -->
+  <div id="recordModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-6 max-w-2xl w-full max-h-[92vh] overflow-y-auto scrollbar scale-in">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-100">📝 Catat Aktivitas Manual</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Pilih kategori dan pilih kegiatan master yang belum diselesaikan</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="refreshRecordBtn" class="text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+            <span id="refreshIcon">🔄</span> Ambil Data
+          </button>
+          <button class="close-record text-slate-400 hover:text-white text-2xl">&times;</button>
+        </div>
+      </div>
+
+      <div id="recordEmptyAlert" class="hidden mb-4">
+        <div class="alert-box alert-warning">
+          <span class="text-lg">⚠️</span>
+          <div class="flex-1">
+            <div class="font-bold mb-0.5">Seluruh tugas sudah dikerjakan</div>
+            <div class="text-xs opacity-90" id="recordEmptyMsg">Semua tugas pada kategori ini sudah berstatus selesai atau belum ada tugas terdaftar.</div>
+            <div class="flex gap-2 mt-3">
+              <button id="goManageFromRecord" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg font-semibold">📋 Kelola Tugas Master</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="recordLoadingAlert" class="hidden mb-4">
+        <div class="alert-box alert-info">
+          <span class="spinner"></span>
+          <div class="flex-1"><div class="font-semibold">Menghubungi server Google Sheets...</div></div>
+        </div>
+      </div>
+
+      <!-- Step 1: Kategori -->
+      <div class="mb-4">
+        <label class="text-xs text-slate-400 mb-2 block font-bold">1️⃣ PILIH KATEGORI <span id="categoryCount" class="ml-2 text-indigo-400 font-normal"></span></label>
+        <select id="recordCategory" class="w-full bg-slate-905 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 text-slate-200">
+          <option value="">-- Pilih Kategori --</option>
+        </select>
+      </div>
+
+      <!-- Step 2: Dropdown Kegiatan -->
+      <div class="mb-4">
+        <label class="text-xs text-slate-400 mb-2 block font-bold">2️⃣ PILIH KEGIATAN <span id="kegiatanCount" class="ml-2 text-indigo-400 font-normal"></span></label>
+        <div id="kegiatanDropdownContainer" class="single-dropdown">
+          <button type="button" id="kegiatanTrigger" class="single-dropdown-trigger" disabled>
+            <div id="kegiatanTriggerContent" class="selected-value">
+              <span class="placeholder">Silahkan pilih kategori terlebih dahulu</span>
+            </div>
+            <span class="arrow text-slate-500">▾</span>
+          </button>
+          <div id="kegiatanMenu" class="single-dropdown-menu hidden scrollbar"></div>
+        </div>
+      </div>
+
+      <!-- Step 3: Detail -->
+      <div class="mb-4">
+        <label class="text-xs text-slate-400 mb-2 block font-bold">3️⃣ DETAIL CATATAN (Opsional)</label>
+        <textarea id="recordDetail" rows="3" placeholder="Tambahkan deskripsi detail di sini jika diperlukan..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 resize-none text-slate-200"></textarea>
+      </div>
+
+      <!-- Step 4: Foto/Video -->
+      <div class="mb-5">
+        <div class="flex justify-between items-center mb-2">
+          <label class="text-xs text-slate-400 font-bold">4️⃣ UNGGAH MEDIA (Maks. 3)</label>
+          <span class="text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded-full" id="recordPhotoCountBadge">0 / 3</span>
+        </div>
+
+        <div id="photoPreviewArea" class="hidden mb-2">
+          <div id="recordMediaPreviewInner" class="flex gap-2 overflow-x-auto pb-2 scrollbar"></div>
+        </div>
+
+        <div id="recordMediaProcessing" class="hidden mb-2 alert-box alert-info">
+          <span class="spinner"></span>
+          <div class="flex-1"><div class="font-semibold">Memproses media...</div></div>
+        </div>
+
+        <label for="photoInput" id="recordPhotoDropLabel" class="block w-full bg-slate-900 hover:bg-slate-800/80 border border-dashed border-slate-800 rounded-xl px-4 py-6 text-center cursor-pointer transition">
+          <div class="text-slate-400 text-sm">
+            <div class="text-3xl mb-2">📸</div>
+            <div class="font-bold text-slate-300">Pilih berkas foto/video dari perangkat</div>
+            <div class="text-[11px] text-slate-500 mt-1">Ukuran maks. 15MB. Foto otomatis dikompres sebelum disimpan.</div>
+          </div>
+        </label>
+      </div>
+
+      <div class="flex gap-2 border-t border-slate-800/80 pt-4">
+        <button id="cancelRecord" class="flex-1 bg-slate-900 hover:bg-slate-800 py-3 rounded-xl font-bold text-xs text-slate-300 transition">❌ Batal</button>
+        <button id="saveRecord" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 py-3 rounded-xl font-bold text-xs text-white transition shadow-lg">💾 Simpan Catatan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HISTORY -->
+  <div id="historyModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-6 max-w-3xl w-full max-h-[92vh] overflow-y-auto scrollbar scale-in">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-100 flex items-center gap-2">
+            <span>📊</span> Riwayat Aktivitas Terakhir
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Daftar aktivitas checklist yang berhasil terekam (diurutkan terbaru)</p>
+        </div>
+        <button class="close-history text-slate-400 hover:text-white text-2xl">&times;</button>
+      </div>
+      <div id="historyList" class="space-y-4"></div>
+      <div id="historyEmpty" class="hidden text-center py-12 text-slate-500 bg-slate-900/10 rounded-xl border border-dashed border-slate-800">
+        <div class="text-4xl mb-3">📭</div>
+        <div class="text-sm">Belum ada aktivitas terekam sama sekali.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MANAGE MASTER TASKS -->
+  <div id="manageModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-6 max-w-3xl w-full max-h-[92vh] overflow-y-auto scrollbar scale-in">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+        <h2 class="text-xl font-extrabold text-slate-100 flex items-center gap-2">
+          <span>📋</span> Kelola Tugas Master
+        </h2>
+        <button class="close-manage text-slate-400 hover:text-white text-2xl">&times;</button>
+      </div>
+      
+      <!-- Add Master Task Form -->
+      <div class="bg-slate-900/60 rounded-2xl p-4 mb-4 border border-indigo-500/10 shadow-inner">
+        <h3 class="text-xs font-bold mb-3 uppercase tracking-wider text-indigo-400 flex items-center gap-1">
+          <span>➕</span> Tambah Tugas Baru
+        </h3>
+        <div class="space-y-3">
+          <input id="newTaskName" type="text" placeholder="Masukkan nama kegiatan checklist..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" />
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <select id="newTaskFreq" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-200">
+              <option value="daily">🌅 Harian</option>
+              <option value="weekly">📅 Mingguan</option>
+              <option value="monthly">🗓️ Bulanan</option>
+            </select>
+            <input id="newTaskCategory" type="text" placeholder="Pilih/Ketik Kategori (Contoh: Backup, Healthcheck)" list="categoryList" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" />
+            <datalist id="categoryList"></datalist>
+          </div>
+          <textarea id="newTaskSpec" rows="2" placeholder="Masukkan spesifikasi tugas atau panduan pengerjaan (Opsional)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 resize-none text-slate-200"></textarea>
+          <button id="addMasterTaskBtn" class="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 py-2.5 rounded-xl font-bold text-xs transition text-white shadow-md shadow-indigo-950/20">+ Daftarkan Tugas Baru</button>
+        </div>
+      </div>
+      
+      <!-- Master Tasks List -->
+      <div class="text-xs text-slate-400 mb-2 font-bold uppercase tracking-wider">Daftar Tugas Master Aktif:</div>
+      <div id="masterTaskList" class="space-y-2.5 scrollbar max-h-[350px] overflow-y-auto pr-1"></div>
+      <div id="masterTaskEmpty" class="hidden text-center py-8 text-slate-500 bg-slate-900/10 rounded-xl border border-dashed border-slate-800">
+        <div class="text-sm">Tidak ada tugas master tersimpan.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SETUP & CONFIG -->
+  <div id="settingsModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-6 max-w-2xl w-full max-h-[92vh] overflow-y-auto scrollbar scale-in">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+        <h2 class="text-xl font-extrabold text-slate-100 flex items-center gap-2">
+          <span>⚙️</span> Setup Integrasi Aplikasi
+        </h2>
+        <button class="close-settings text-slate-400 hover:text-white text-2xl">&times;</button>
+      </div>
+
+      <!-- Segment Tabs -->
+      <div class="flex bg-slate-950 border border-slate-800 p-1 rounded-2xl mb-6">
+        <button id="tabGoogleSheetBtn" class="flex-1 py-3 text-xs md:text-sm font-extrabold text-center rounded-xl transition-all duration-200 tab-active">
+          📂 Google Sheets & Drive
+        </button>
+        <button id="tabCabangBtn" class="flex-1 py-3 text-xs md:text-sm font-extrabold text-center rounded-xl transition-all duration-200 text-slate-400 hover:text-white">
+          🏢 Database Cabang
+        </button>
+      </div>
+
+      <!-- Sub-menu: Google Sheets Sync -->
+      <div id="subMenuGoogleSheet" class="space-y-4">
+        <div class="bg-indigo-950/20 rounded-2xl p-4 border border-indigo-500/20 text-xs text-indigo-300 space-y-2">
+          <h3 class="font-bold text-amber-400 text-sm flex items-center gap-1">🚨 PENTING: Cara Deploy Google Apps Script</h3>
+          <p class="leading-relaxed">Pastikan Anda telah mendeploy script penanganan ini ke akun Google Sheet Anda dengan benar:</p>
+          <ol class="space-y-1.5 list-decimal list-inside font-semibold text-slate-300">
+            <li>Buka dokumen Spreadsheet Google Anda.</li>
+            <li>Akses menu <span class="text-white">Ekstensi / Extensions</span> → <span class="text-white">Apps Script</span>.</li>
+            <li>Hapus berkas kode bawaan lama, dan rekatkan (paste) seluruh script di bawah ini.</li>
+            <li>Klik dropdown menu fungsi di bagian atas script, pilih <b class="text-amber-300">setupPermissions</b> kemudian klik tombol <b class="text-emerald-400">Run</b> untuk mengaktifkan izin Drive.</li>
+            <li>Klik <span class="text-white">Deploy → New Deployment</span>. Pilih opsi <b class="text-emerald-400">Web App</b>.</li>
+            <li>Atur hak akses: <b>Who has access: Anyone</b>. Lalu salin URL Web App yang dihasilkan.</li>
+          </ol>
+        </div>
+
+        <div>
+          <label class="text-xs text-slate-400 mb-1.5 block font-bold">KODE SCRIPT WEB (Code.gs)</label>
+          <pre class="bg-slate-950 rounded-xl p-3.5 text-xs text-emerald-400 overflow-x-auto max-h-44 scrollbar font-mono border border-slate-900"><code id="scriptCode"></code></pre>
+          <button id="copyScriptBtn" class="mt-2 text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 px-3.5 py-2 rounded-xl text-slate-200 font-bold transition flex items-center gap-1">
+            📋 Salin Kode Script
+          </button>
+        </div>
+
+        <div class="pt-2 border-t border-slate-850">
+          <label class="text-xs text-slate-400 mb-1.5 block font-bold">WEB APP URL (Dari Hasil Deploy)</label>
+          <input id="webAppUrl" type="text" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 text-slate-100" />
+        </div>
+
+        <div class="flex gap-2 mt-2">
+          <button id="saveSettings" class="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 py-3 rounded-xl font-bold text-xs">💾 Simpan & Integrasikan</button>
+          <button id="testConnection" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 px-4 py-3 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200">🧪 Diagnostik Koneksi</button>
+        </div>
         
-        navigator.serviceWorker.register(URL.createObjectURL(swBlob))
-          .catch(err => console.log('SW registration failed: ', err));
+        <!-- DIAGNOSTIC OUTPUT CONTAINER -->
+        <div id="diagnosticArea" class="hidden bg-slate-950 border border-slate-850 rounded-xl p-4 mt-3">
+          <h4 class="text-xs font-bold text-indigo-400 mb-2 uppercase tracking-wider">🔍 Laporan Jaringan & Izin CORS</h4>
+          <div id="diagnosticLog" class="text-[11px] font-mono space-y-1.5 max-h-40 overflow-y-auto scrollbar text-slate-400"></div>
+        </div>
+
+        <div id="connectionStatus" class="text-xs text-center min-h-[20px]"></div>
+        <button id="disconnectSettings" class="hidden w-full bg-red-950/30 hover:bg-red-950 border border-red-900/20 text-red-400 py-2.5 rounded-xl text-xs font-bold transition">🔌 Putuskan Integrasi & Kembali Ke Mode Lokal</button>
+      </div>
+
+      <!-- Sub-menu: Branch Database CRUD -->
+      <div id="subMenuCabang" class="hidden space-y-4">
+        <div id="cabangLocalAlert" class="hidden mb-3 alert-box alert-warning">
+          <span class="text-lg">⚠️</span>
+          <div class="flex-1">
+            <div class="font-bold text-xs mb-0.5">Berjalan Dalam Mode Lokal</div>
+            <div class="text-[11px] opacity-90">Daftar cabang di bawah ini saat ini hanya tersimpan di perangkat lokal. Sambungkan Google Sheets agar perubahan tersimpan otomatis ke Cloud.</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/60 rounded-2xl p-4 border border-purple-500/10">
+          <h3 class="text-xs font-bold mb-3 text-purple-400 uppercase tracking-wider" id="cabangFormTitle">➕ Tambah Cabang Baru</h3>
+          <input type="hidden" id="editCabangIndex" value="" />
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+            <div>
+              <label class="text-[10px] text-slate-400 mb-1 block font-bold">ID / KODE CABANG</label>
+              <input id="newCabangId" type="text" placeholder="Contoh: KCU-001" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:border-purple-500" />
+            </div>
+            <div>
+              <label class="text-[10px] text-slate-400 mb-1 block font-bold">NAMA KANTOR CABANG</label>
+              <input id="newCabangName" type="text" placeholder="Contoh: KC Jakarta Harmoni" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:border-purple-500" />
+            </div>
+            <div>
+              <label class="text-[10px] text-slate-400 mb-1 block font-bold">PSW CABANG (Sandi)</label>
+              <input id="newCabangPsw" type="password" placeholder="Masukan password" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:border-purple-500" />
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button id="cancelEditCabangBtn" class="hidden flex-1 bg-slate-900 hover:bg-slate-800 py-2.5 rounded-xl font-bold text-xs text-slate-300 transition">Batal</button>
+            <button id="saveCabangBtn" class="flex-1 bg-gradient-to-r from-purple-500 to-indigo-600 py-2.5 rounded-xl font-bold text-xs text-white shadow-lg transition">💾 Simpan Kantor Cabang</button>
+          </div>
+        </div>
+
+        <div class="text-xs text-slate-400 mb-1 font-bold uppercase tracking-wider">Daftar Cabang BTN Terdaftar:</div>
+        <div id="cabangList" class="space-y-2.5 scrollbar max-h-[250px] overflow-y-auto pr-1"></div>
+        <div id="cabangEmpty" class="hidden text-center py-6 text-slate-500 bg-slate-900/10 rounded-xl border border-dashed border-slate-800">
+          <div class="text-sm">Belum ada kantor cabang yang didaftarkan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRM CUSTOM -->
+  <div id="customConfirmModal" class="hidden fixed inset-0 modal-overlay flex items-center justify-center p-4 z-[9999]">
+    <div class="glass-card rounded-3xl p-6 max-w-sm w-full text-center border border-indigo-500/20 shadow-2xl scale-in">
+      <div class="text-4xl mb-3">⚠️</div>
+      <h3 class="text-lg font-extrabold mb-2 text-white" id="customConfirmTitle">Konfirmasi</h3>
+      <p class="text-xs text-slate-300 mb-6 leading-relaxed" id="customConfirmMessage">Apakah Anda yakin ingin melakukan tindakan ini?</p>
+      <div class="flex gap-2">
+        <button id="customConfirmCancel" class="flex-1 bg-slate-900 hover:bg-slate-800 py-2.5 rounded-xl font-bold text-xs text-slate-300 transition">Batal</button>
+        <button id="customConfirmYes" class="flex-1 py-2.5 rounded-xl font-bold text-xs text-white transition shadow-lg">Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PHOTO VIEWER (IN-APP GALERI) -->
+  <div id="photoViewerModal" class="hidden fixed inset-0 z-[99999] bg-black/95 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 opacity-0">
+    <div class="absolute top-4 right-4 flex gap-3 z-50">
+      <a id="downloadPhotoBtn" href="#" target="_blank" class="w-10 h-10 bg-slate-800/60 hover:bg-slate-700 rounded-full flex items-center justify-center text-white text-xl transition shadow-lg" title="Buka Asli / Unduh">⬇️</a>
+      <button id="closePhotoViewerBtn" class="w-10 h-10 bg-red-500/80 hover:bg-red-500 rounded-full flex items-center justify-center text-white text-2xl font-bold transition shadow-lg">&times;</button>
+    </div>
+    <div class="w-full h-full flex items-center justify-center p-2 md:p-8 overflow-hidden">
+      <img id="photoViewerImg" src="" class="max-w-full max-h-full object-contain transition-transform duration-300 scale-95 cursor-zoom-out" />
+      <video id="videoViewerVid" src="" controls class="max-w-full max-h-full hidden object-contain rounded-xl shadow-2xl"></video>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 glass rounded-2xl px-5 py-3.5 text-xs font-bold hidden shadow-2xl max-w-sm border-l-4 transition-all duration-300"></div>
+
+  <!-- INPUT FILE SECARA OFF-SCREEN (Mencegah pemblokiran klik otomatis di iOS/Android Safari) -->
+  <input type="file" id="inputCamPhoto" accept="image/*" capture="environment" class="sr-only" />
+  <input type="file" id="inputCamVideo" accept="video/*" capture="environment" class="sr-only" />
+  <input type="file" id="inputUploadAll" accept="image/*,video/*" class="sr-only" />
+  <input type="file" id="photoInput" accept="image/*,video/*" class="sr-only" />
+
+  <script>
+  const APPS_SCRIPT_CODE = `function setupPermissions() {
+  var testFile = DriveApp.createFile('Test_Izin.txt', 'Hanya untuk otorisasi.');
+  testFile.setTrashed(true);
+  SpreadsheetApp.getActiveSpreadsheet();
+  Logger.log("Berhasil!");
+}
+
+function processFotosSync(fotosArray, safeName) {
+  let urls = ['', '', ''];
+  if(Array.isArray(fotosArray)) {
+    let folders = DriveApp.getFoldersByName('Checklist DBMSC');
+    let folder = folders.hasNext() ? folders.next() : DriveApp.createFolder('Checklist DBMSC');
+    
+    for(let i=0; i<Math.min(fotosArray.length, 3); i++) {
+      let f = fotosArray[i];
+      if (f && typeof f === 'string' && f.startsWith('http')) {
+        urls[i] = f;
+      } else if (f && typeof f === 'string' && f.indexOf('data:') === 0) {
+        try {
+          const split = f.split(',');
+          const mimeMatch = split[0].match(/:(.*?);/);
+          const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+          const extMap = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'video/mp4': 'mp4', 'video/webm': 'webm', 'video/quicktime': 'mov' };
+          const ext = extMap[mime] || (mime.split('/')[1] || 'dat');
+          const b64 = split[1];
+          const blob = Utilities.newBlob(Utilities.base64Decode(b64), mime, 'Checklist_' + safeName + '_' + (i+1) + '_' + new Date().getTime() + '.' + ext);
+          const file = folder.createFile(blob);
+          file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+          const isVideo = mime.indexOf('video/') === 0;
+          urls[i] = isVideo
+            ? 'https://drive.google.com/uc?export=download&id=' + file.getId()
+            : 'https://drive.google.com/thumbnail?id=' + file.getId() + '&sz=w1600';
+        } catch(err) {
+          urls[i] = '[Error]';
+        }
+      }
+    }
+  }
+  return urls;
+}
+
+function doGet(e) { return handleRequest(e); }
+function doPost(e) { return handleRequest(e); }
+
+function handleRequest(e) {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    let cSheet = ss.getSheetByName('Checklist') || ss.insertSheet('Checklist');
+    if (cSheet.getLastRow() === 0) cSheet.appendRow(['id', 'KEGIATAN', 'JENIS', 'KATEGORI', 'SPESIFIKASI']);
+    
+    let aSheet = ss.getSheetByName('Aktifitas') || ss.insertSheet('Aktifitas');
+    if (aSheet.getLastRow() === 0) aSheet.appendRow(['timestamp', 'ID_CABANG', 'aksi', 'id_tugas', 'nama_tugas', 'jenis', 'kategori', 'detail', 'FotoAktifitas', 'FotoAktifitas2', 'FotoAktifitas3']);
+    
+    let cbSheet = ss.getSheetByName('Cabang') || ss.insertSheet('Cabang');
+    if (cbSheet.getLastRow() === 0) cbSheet.appendRow(['ID_CABANG', 'NAMA_CABANG', 'PSW_CABANG']);
+
+    const params = e.parameter || {};
+    let body = {};
+    if (e.postData && e.postData.contents) {
+      try { body = JSON.parse(e.postData.contents); } catch (err) { body = {}; }
+    }
+    const action = params.action || body.action || 'list_tasks';
+
+    function respond(obj) {
+      return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.TEXT);
+    }
+
+    if (action === 'list_tasks') {
+      const data = cSheet.getDataRange().getValues();
+      const items = data.slice(1).filter(r => r[0]).map(r => ({
+        id: String(r[0]), KEGIATAN: r[1] || '', JENIS: r[2] || 'daily', KATEGORI: r[3] || '', SPESIFIKASI: r[4] || ''
+      }));
+      return respond({ok: true, data: items});
+    }
+
+    if (action === 'add_task') {
+      const t = body.task;
+      if (!t || !t.KEGIATAN) return respond({ok: false, error: 'Nama kosong'});
+      cSheet.appendRow([t.id, t.KEGIATAN, t.JENIS || 'daily', t.KATEGORI || '', t.SPESIFIKASI || '']);
+      return respond({ok: true});
+    }
+
+    if (action === 'delete_task') {
+      const data = cSheet.getDataRange().getValues();
+      let found = false;
+      for (let i = data.length - 1; i >= 1; i--) {
+        if (String(data[i][0]) === String(body.id)) { cSheet.deleteRow(i + 1); found = true; }
+      }
+      return respond({ok: true, found: found});
+    }
+
+    if (action === 'add_activity') {
+      const a = body.activity;
+      if (!a || !a.id) return respond({ok: false, error: 'Data tidak lengkap'});
+      const ts = new Date().toISOString();
+      const safeName = String(a.KEGIATAN || 'aktivitas').replace(/[^a-z0-9]/gi, '_').slice(0, 40);
+      let urls = processFotosSync(body.fotos, safeName);
+      aSheet.appendRow([ts, body.id_cabang || '', 'SELESAI', a.id, a.KEGIATAN, a.JENIS, a.KATEGORI, body.detail || '', urls[0], urls[1], urls[2]]);
+      return respond({ok: true, timestamp: ts});
+    }
+
+    if (action === 'update_activity') {
+      const a = body.activity;
+      if (!a || !a.id || !body.timestamp) return respond({ok: false, error: 'Data tidak lengkap'});
+      const safeName = String(a.KEGIATAN || 'aktivitas').replace(/[^a-z0-9]/gi, '_').slice(0, 40);
+      let urls = processFotosSync(body.fotos, safeName);
+      const data = aSheet.getDataRange().getValues();
+      let updated = false;
+      for (let i = data.length - 1; i >= 1; i--) {
+        if (String(data[i][0]) === String(body.timestamp) && String(data[i][3]) === String(a.id)) {
+          aSheet.getRange(i + 1, 8).setValue(body.detail || '');
+          aSheet.getRange(i + 1, 9).setValue(urls[0]);
+          aSheet.getRange(i + 1, 10).setValue(urls[1]);
+          aSheet.getRange(i + 1, 11).setValue(urls[2]);
+          updated = true; break;
+        }
+      }
+      return respond({ok: updated});
+    }
+
+    if (action === 'delete_activity') {
+      const data = aSheet.getDataRange().getValues();
+      for (let i = data.length - 1; i >= 1; i--) {
+        if (String(data[i][0]) === String(body.timestamp) && String(data[i][3]) === String(body.id_tugas)) {
+          aSheet.deleteRow(i + 1); break;
+        }
+      }
+      return respond({ok: true});
+    }
+
+    if (action === 'list_activities') {
+      const data = aSheet.getDataRange().getValues();
+      const items = data.slice(1).filter(r => r[0]).map(r => {
+        let fotoArr = [r[8], r[9], r[10]].filter(x => x && typeof x === 'string' && x.startsWith('http'));
+        return { 
+          timestamp: r[0] instanceof Date ? r[0].toISOString() : r[0], 
+          id_cabang: r[1] || '',
+          aksi: r[2], 
+          id_tugas: r[3], 
+          nama_tugas: r[4], 
+          jenis: r[5], 
+          kategori: r[6], 
+          detail: r[7] || '', 
+          fotos: fotoArr 
+        };
+      }).reverse();
+      return respond({ok: true, data: items});
+    }
+
+    if (action === 'list_cabang') {
+      const data = cbSheet.getDataRange().getValues();
+      const items = data.slice(1).filter(r => r[0]).map(r => ({ ID_CABANG: String(r[0]), NAMA_CABANG: r[1] || '', PSW_CABANG: r[2] || '' }));
+      return respond({ok: true, data: items});
+    }
+
+    if (action === 'add_cabang') {
+      const cb = body.cabang;
+      if (!cb || !cb.ID_CABANG) return respond({ok: false, error: 'Data cabang tidak lengkap'});
+      cbSheet.appendRow([cb.ID_CABANG, cb.NAMA_CABANG || '', cb.PSW_CABANG || '']);
+      return respond({ok: true});
+    }
+
+    if (action === 'update_cabang') {
+      const cb = body.cabang;
+      const oldId = body.oldId;
+      if (!cb || !cb.ID_CABANG || !oldId) return respond({ok: false, error: 'Data cabang tidak lengkap'});
+      const data = cbSheet.getDataRange().getValues();
+      let updated = false;
+      for (let i = 1; i < data.length; i++) {
+        if (String(data[i][0]) === String(oldId)) {
+          cbSheet.getRange(i + 1, 1).setValue(cb.ID_CABANG); 
+          cbSheet.getRange(i + 1, 2).setValue(cb.NAMA_CABANG || '');
+          cbSheet.getRange(i + 1, 3).setValue(cb.PSW_CABANG || '');
+          updated = true; break;
+        }
+      }
+      return respond({ok: updated});
+    }
+
+    if (action === 'delete_cabang') {
+      const id = body.ID_CABANG;
+      if (!id) return respond({ok: false, error: 'ID cabang kosong'});
+      const data = cbSheet.getDataRange().getValues();
+      let deleted = false;
+      for (let i = data.length - 1; i >= 1; i--) {
+        if (String(data[i][0]) === String(id)) { cbSheet.deleteRow(i + 1); deleted = true; break; }
+      }
+      return respond({ok: deleted});
+    }
+
+    return respond({ok: false, error: 'Unknown action: ' + action});
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ok: false, error: err.toString()})).setMimeType(ContentService.MimeType.TEXT);
+  }
+}`;
+
+  const Storage = {
+    _memory: {},
+    _available: null,
+    isAvailable() {
+      if (this._available !== null) return this._available;
+      try {
+        const k = '__test__';
+        localStorage.setItem(k, '1');
+        localStorage.removeItem(k);
+        this._available = true;
+      } catch (e) { this._available = false; }
+      return this._available;
+    },
+    get(key) {
+      try {
+        if (this.isAvailable()) {
+          const v = localStorage.getItem(key);
+          return v ? JSON.parse(v) : null;
+        }
+      } catch (e) {}
+      return this._memory[key] || null;
+    },
+    set(key, value) {
+      this._memory[key] = value;
+      try {
+        if (this.isAvailable()) {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        }
+      } catch (e) { return false; }
+      return false;
+    },
+    remove(key) {
+      delete this._memory[key];
+      try { if (this.isAvailable()) localStorage.removeItem(key); } catch (e) {}
+    }
+  };
+
+  const STORAGE_KEY = 'routine_checklist_v12';
+  const SETTINGS_KEY = 'routine_checklist_settings';
+
+  let state = {
+    tasks: [],
+    activities: [],
+    categories: [],
+    cabangs: [],
+    activeTab: 'daily',
+    activeCategory: 'all',
+    searchQuery: '',
+    statusFilter: 'all', // all, pending, completed
+    settings: { webAppUrl: '' }
+  };
+
+  let recordState = { selectedCategory: '', selectedTaskId: null, detail: '', fotos: [], dropdownOpen: false, isProcessingMedia: false };
+  let completionState = { activeTaskId: null, detail: '', fotos: [], isViewOnly: false, activeActivityTimestamp: null, isProcessingMedia: false };
+  let customConfirmCallback = null;
+  let isSavingCompletion = false, isSavingRecord = false, isAddingTask = false, isSavingCabang = false;
+
+  // State GPS Global untuk mempermudah Watermarking
+  let gpsState = {
+    lat: null,
+    lng: null,
+    address: 'Mencari lokasi GPS...',
+    addressObj: null
+  };
+
+  // --- MANAJEMEN MODAL & HISTORY (PENCEGAH TOMBOL BACK) ---
+  const ALL_MODALS = ['taskCompletionModal', 'recordModal', 'historyModal', 'manageModal', 'settingsModal', 'customConfirmModal', 'photoViewerModal'];
+
+  function showModalWithHistory(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    
+    modal.classList.remove('hidden');
+    
+    // Animasi ekstra untuk Photo Viewer
+    if (modalId === 'photoViewerModal') {
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        const img = document.getElementById('photoViewerImg');
+        if (img) img.classList.remove('scale-95');
+      }, 10);
+    }
+    
+    // Simpan history agar tombol Back HP berfungsi menutup modal
+    history.pushState({ modal: modalId }, '');
+  }
+
+  function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    if (modalId === 'photoViewerModal') {
+      modal.classList.add('opacity-0');
+      const img = document.getElementById('photoViewerImg');
+      if (img) img.classList.add('scale-95');
+      const vid = document.getElementById('videoViewerVid');
+      if (vid) vid.pause();
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        if (img) img.src = '';
+        if (vid) vid.src = '';
+      }, 300);
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
+
+  function safeCloseModal(modalId) {
+    if (history.state && history.state.modal === modalId) {
+      history.back(); // Memanggil popstate otomatis yang akan menutupnya
+    } else {
+      hideModal(modalId);
+    }
+  }
+
+  // Mendengarkan tombol "Back" fisik di HP
+  window.addEventListener('popstate', (e) => {
+    const activeModalInHistory = e.state ? e.state.modal : null;
+    ALL_MODALS.forEach(id => {
+      const m = document.getElementById(id);
+      // Tutup semua modal yang bukan merupakan modal aktif di History saat ini
+      if (m && !m.classList.contains('hidden') && id !== activeModalInHistory) {
+        hideModal(id);
+      }
+    });
+  });
+  // --------------------------------------------------------
+
+  function startGpsTracking() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.watchPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          gpsState.lat = lat;
+          gpsState.lng = lng;
+          
+          // Reverse-geocoding koordinat GPS secara real-time
+          try {
+            const resArcgis = await fetch(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&location=${lng},${lat}`);
+            if (resArcgis.ok) {
+              const dataArcgis = await resArcgis.json();
+              if (dataArcgis && dataArcgis.address) {
+                const addr = dataArcgis.address;
+                const jalan = addr.Address || addr.Neighborhood || addr.ShortLabel || "";
+                const kota = [addr.District, addr.City, addr.Region, addr.Postal].filter(Boolean).join(', ');
+                gpsState.address = [jalan, kota, "Indonesia"].filter(Boolean).join(', ');
+                gpsState.addressObj = addr;
+                return;
+              }
+            }
+          } catch (e) {}
+
+          try {
+            const resNominatim = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`, {
+              headers: { 'Accept-Language': 'id-ID,id' }
+            });
+            if (resNominatim.ok) {
+              const dataNominatim = await resNominatim.json();
+              gpsState.address = dataNominatim.display_name;
+              gpsState.addressObj = dataNominatim.address;
+              return;
+            }
+          } catch (e) {}
+
+          gpsState.address = `Sinyal GPS Terdeteksi (Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)})`;
+        },
+        (error) => {
+          console.warn("Kesalahan GPS:", error);
+          gpsState.address = "Akses GPS tidak diijinkan / dinonaktifkan";
+          gpsState.lat = "-";
+          gpsState.lng = "-";
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    } else {
+      gpsState.address = "Sistem GPS tidak didukung perangkat ini";
+      gpsState.lat = "-";
+      gpsState.lng = "-";
+    }
+  }
+
+  function showCustomConfirm(title, message, isDangerButton, onConfirm) {
+    document.getElementById('customConfirmTitle').textContent = title;
+    document.getElementById('customConfirmMessage').textContent = message;
+    const yesBtn = document.getElementById('customConfirmYes');
+    if (isDangerButton) {
+      yesBtn.className = "flex-1 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 py-2.5 rounded-xl font-bold text-xs text-white transition shadow-lg shadow-red-950/20";
+      yesBtn.textContent = "Ya, Hapus";
+    } else {
+      yesBtn.className = "flex-1 bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 py-2.5 rounded-xl font-bold text-xs text-white transition shadow-lg shadow-indigo-950/20";
+      yesBtn.textContent = "Ya, Lanjutkan";
+    }
+    customConfirmCallback = onConfirm;
+    showModalWithHistory('customConfirmModal');
+  }
+
+  document.getElementById('customConfirmCancel').addEventListener('click', () => { 
+    safeCloseModal('customConfirmModal'); 
+    customConfirmCallback = null; 
+  });
+  
+  document.getElementById('customConfirmYes').addEventListener('click', () => { 
+    safeCloseModal('customConfirmModal'); 
+    const cb = customConfirmCallback; 
+    customConfirmCallback = null; 
+    if (cb) cb(); 
+  });
+
+  function getActiveBranchId() {
+    const selector = document.getElementById('activeBranchSelector');
+    if (selector && selector.value) return selector.value;
+    return Storage.get('active_branch_id') || '';
+  }
+
+  function loadState() {
+    const saved = Storage.get(STORAGE_KEY);
+    if (saved) {
+      state.tasks = saved.tasks || [];
+      state.activities = saved.activities || [];
+      state.cabangs = saved.cabangs || [];
+      state.activities.forEach(a => { if (!a.fotos) a.fotos = [a.foto, a.foto2, a.foto3].filter(Boolean); });
+      state.categories = saved.categories || [];
+      state.activeTab = saved.activeTab || 'daily';
+    }
+    const s = Storage.get(SETTINGS_KEY);
+    if (s) state.settings = s;
+  }
+
+  function saveState() {
+    const ok = Storage.set(STORAGE_KEY, { tasks: state.tasks, activities: state.activities, categories: state.categories, cabangs: state.cabangs, activeTab: state.activeTab });
+    if (!ok) showToast('Penyimpanan lokal perangkat penuh!', 'error');
+    return ok;
+  }
+
+  function saveSettings() { return Storage.set(SETTINGS_KEY, state.settings); }
+
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  
+  function formatDateLabel() { 
+    return "📅 " + new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); 
+  }
+  
+  // Custom helper untuk pengecekan ID secara aman
+  function isSameId(id1, id2) {
+    const s1 = String(id1 || '').trim().toLowerCase(), s2 = String(id2 || '').trim().toLowerCase();
+    if (s1 === s2) return true;
+    if (s1.replace(/\.0+$/, '') === s2.replace(/\.0+$/, '')) return true;
+    return false;
+  }
+
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function escapeAttr(s) { return escapeHtml(s).replace(/`/g, '&#96;'); }
+
+  function showToast(msg, type = 'info') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'fixed bottom-6 right-6 glass rounded-2xl px-5 py-3.5 text-xs font-bold shadow-2xl fade-in max-w-sm transition duration-300';
+    t.style.zIndex = '9999';
+    const colors = { success: '#10b981', error: '#ef4444', info: '#6366f1', warning: '#f59e0b' };
+    t.style.borderLeft = `5px solid ${colors[type] || colors.info}`;
+    t.classList.remove('hidden');
+    clearTimeout(t._hideTimer);
+    t._hideTimer = setTimeout(() => t.classList.add('hidden'), 3500);
+  }
+
+  function hashStr(s) { let h = 0; for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0; return Math.abs(h); }
+
+  const CATEGORY_PALETTES = [
+    { bg: 'rgba(59, 130, 246, 0.15)', color: '#93c5fd' }, 
+    { bg: 'rgba(236, 72, 153, 0.15)', color: '#f9a8d4' },
+    { bg: 'rgba(16, 185, 129, 0.15)', color: '#6ee7b7' }, 
+    { bg: 'rgba(245, 158, 11, 0.15)', color: '#fcd34d' },
+    { bg: 'rgba(14, 165, 233, 0.15)', color: '#7dd3fc' }, 
+    { bg: 'rgba(168, 85, 247, 0.15)', color: '#d8b4fe' }
+  ];
+
+  function getCategoryStyle(cat) {
+    if (!cat) return { bg: 'rgba(100, 116, 139, 0.15)', color: '#cbd5e1' };
+    return CATEGORY_PALETTES[hashStr(cat) % CATEGORY_PALETTES.length];
+  }
+
+  function isVideoMedia(url) {
+    if (!url) return false;
+    return url.includes('video/') || /\.(mp4|webm|ogg|mov)(\?|$)/i.test(url) || url.startsWith('data:video') || url.includes('export=download');
+  }
+
+  function parseRobustDate(dateStr) {
+    if (!dateStr) return new Date();
+    if (dateStr instanceof Date) return dateStr;
+    let str = String(dateStr).trim();
+    if (str.includes('T')) { let d = new Date(str); if (!isNaN(d.getTime())) return d; }
+    str = str.replace(/\s*(WIB|WIT|WITA|GMT\+7|GMT\+8|GMT\+9)/gi, '').trim().replace(/(\d{1,2})\.(\d{1,2})\.(\d{1,2})/g, '$1:$2:$3');
+    let d2 = new Date(str);
+    if (!isNaN(d2.getTime())) return d2;
+    const dmyMatch = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:\s+(\d{1,2})[\:\.](\d{1,2})(?:\:(\d{1,2}))?)?/);
+    if (dmyMatch) return new Date(parseInt(dmyMatch[3], 10), parseInt(dmyMatch[2], 10) - 1, parseInt(dmyMatch[1], 10), parseInt(dmyMatch[4] || '0', 10), parseInt(dmyMatch[5] || '0', 10), parseInt(dmyMatch[6] || '0', 10));
+    const ymdMatch = str.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:\s+(\d{1,2})[\:\.](\d{1,2})(?:\:(\d{1,2}))?)?/);
+    if (ymdMatch) return new Date(parseInt(ymdMatch[1], 10), parseInt(ymdMatch[2], 10) - 1, parseInt(ymdMatch[3], 10), parseInt(ymdMatch[4] || '0', 10), parseInt(ymdMatch[5] || '0', 10), parseInt(ymdMatch[6] || '0', 10));
+    return new Date(); 
+  }
+
+  function isActivityInCurrentPeriod(dateStr, jenis, kategori) {
+    if (!dateStr) return false;
+    const activityDate = parseRobustDate(dateStr);
+    if (isNaN(activityDate.getTime())) return false;
+    const now = new Date();
+    const combined = (String(jenis || '') + ' ' + String(kategori || '')).toLowerCase();
+    let f = 'daily';
+    if (combined.includes('weekly') || combined.includes('mingguan')) f = 'weekly';
+    else if (combined.includes('monthly') || combined.includes('bulanan')) f = 'monthly';
+    const actYear = activityDate.getFullYear(), actMonth = activityDate.getMonth(), actDate = activityDate.getDate();
+    const nowYear = now.getFullYear(), nowMonth = now.getMonth(), nowDate = now.getDate();
+    
+    if (f === 'daily') {
+      const dayMatch = actDate === nowDate && actMonth === nowMonth && actYear === nowYear;
+      if (dayMatch) return true;
+      const diffMs = Math.abs(now.getTime() - activityDate.getTime()), diffHours = diffMs / (1000 * 60 * 60);
+      return diffHours < 16;
+    } else if (f === 'weekly') {
+      const startOfWeek = new Date(nowYear, nowMonth, nowDate - now.getDay());
+      startOfWeek.setHours(0, 0, 0, 0);
+      const tolerantStart = new Date(startOfWeek.getTime() - (24 * 60 * 60 * 1000));
+      return activityDate >= tolerantStart;
+    } else if (f === 'monthly') {
+      if (actMonth === nowMonth && actYear === nowYear) return true;
+      const diffDays = Math.abs(now.getTime() - activityDate.getTime()) / (1000 * 60 * 60 * 24);
+      return diffDays < 2;
+    }
+    return false;
+  }
+
+  async function apiCall(action, payload = {}) {
+    if (!state.settings.webAppUrl) return { ok: false, error: 'No URL configured' };
+    try {
+      const response = await fetch(state.settings.webAppUrl, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'text/plain' }, 
+        body: JSON.stringify({ action, ...payload }) 
+      });
+      if (!response.ok) return { ok: false, error: `HTTP ${response.status}` };
+      const text = await response.text();
+      try { return JSON.parse(text); } catch (jsonErr) { return { ok: false, error: 'Format JSON dari Web App tidak valid' }; }
+    } catch (err) { return { ok: false, error: err.message || 'Network error' }; }
+  }
+
+  async function apiGet(action) {
+    if (!state.settings.webAppUrl) return null;
+    try {
+      const res = await fetch(state.settings.webAppUrl + '?action=' + encodeURIComponent(action));
+      if (!res.ok) return { ok: false, error: `HTTP ${res.status}` };
+      const text = await res.text();
+      try { return JSON.parse(text); } catch (jsonErr) { return { ok: false, error: 'Format JSON dari Web App tidak valid' }; }
+    } catch (e) { return { ok: false, error: e.message || 'Network error' }; }
+  }
+
+  function applyTasksResponse(tasksRes) {
+    if (tasksRes && tasksRes.ok && Array.isArray(tasksRes.data)) {
+      state.tasks = tasksRes.data.map(r => ({ id: String(r.id), KEGIATAN: r.KEGIATAN || '', JENIS: r.JENIS || 'daily', KATEGORI: r.KATEGORI || '', SPESIFIKASI: r.SPESIFIKASI || '' }));
+      return true;
+    }
+    return false;
+  }
+
+  function applyActivitiesResponse(actRes) {
+    if (actRes && actRes.ok && Array.isArray(actRes.data)) {
+      state.activities = actRes.data.map(a => { if(!a.fotos) a.fotos = [a.foto, a.foto2, a.foto3].filter(Boolean); return a; });
+      return true;
+    }
+    return false;
+  }
+
+  function applyCabangsResponse(cbRes) {
+    if (cbRes && cbRes.ok && Array.isArray(cbRes.data)) {
+      state.cabangs = cbRes.data.map(c => ({ 
+        ID_CABANG: String(c.ID_CABANG), 
+        NAMA_CABANG: c.NAMA_CABANG || '', 
+        PSW_CABANG: c.PSW_CABANG || '' 
+      }));
+      return true;
+    }
+    return false;
+  }
+
+  async function syncAll() {
+    if (!state.settings.webAppUrl) return false;
+    const [tasksRes, actRes, cbRes] = await Promise.all([ apiGet('list_tasks'), apiGet('list_activities'), apiGet('list_cabang') ]);
+    const tOk = applyTasksResponse(tasksRes), aOk = applyActivitiesResponse(actRes), cOk = applyCabangsResponse(cbRes);
+    if (tOk || aOk || cOk) { saveState(); return true; }
+    if ((tasksRes && tasksRes.ok) || (actRes && actRes.ok) || (cbRes && cbRes.ok)) { saveState(); return true; }
+    return false;
+  }
+
+  async function silentBackgroundSync() {
+    if (!state.settings.webAppUrl) return;
+    const [tasksRes, actRes, cbRes] = await Promise.all([ apiGet('list_tasks'), apiGet('list_activities'), apiGet('list_cabang') ]);
+    const tOk = applyTasksResponse(tasksRes), aOk = applyActivitiesResponse(actRes), cOk = applyCabangsResponse(cbRes);
+    if (tOk || aOk || cOk) { saveState(); render(); renderCabangs(); }
+  }
+
+  function updateConnectionUI() {
+    const dot = document.getElementById('statusDot'), text = document.getElementById('statusText');
+    if (state.settings.webAppUrl) {
+      text.textContent = 'Terhubung ke Google Sheets ✓';
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400';
+    } else {
+      text.textContent = 'Mode Lokal (Offline - Data tersimpan di browser)';
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500';
+    }
+    const disconnectBtn = document.getElementById('disconnectSettings');
+    if (disconnectBtn) disconnectBtn.classList.toggle('hidden', !state.settings.webAppUrl);
+  }
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  async function runDiagnostics() {
+    const url = document.getElementById('webAppUrl').value.trim(), diagArea = document.getElementById('diagnosticArea'), diagLog = document.getElementById('diagnosticLog');
+    if (!url) { showToast('Silahkan masukkan URL Web App Apps Script dulu!', 'warning'); return; }
+    diagArea.classList.remove('hidden');
+    diagLog.innerHTML = `<div class="text-indigo-400 font-bold">🔄 Memulai diagnostik koneksi sistem...</div>`;
+    await sleep(500);
+    if (!url.startsWith('https://script.google.com/') || !url.includes('/exec')) {
+      diagLog.innerHTML += `<div class="text-amber-400">⚠️ Format URL tidak standar. Harusnya berbentuk: "https://script.google.com/macros/s/.../exec"</div>`;
+    } else {
+      diagLog.innerHTML += `<div class="text-emerald-400">✓ Tahap 1: Format struktur URL valid.</div>`;
+    }
+    await sleep(400);
+    diagLog.innerHTML += `<div class="text-slate-400">📡 Tahap 2: Menghubungi Google Apps Script Host (GET)...</div>`;
+    try {
+      const res = await fetch(url + '?action=list_tasks', { method: 'GET' });
+      diagLog.innerHTML += `<div class="text-emerald-400">✓ Respon diterima. HTTP Status: ${res.status}</div>`;
+      const text = await res.text();
+      if (text.trim().startsWith('<!DOCTYPE html>') || text.includes('google-signin') || text.includes('accounts.google.com')) {
+        diagLog.innerHTML += `<div class="text-red-400 mt-2 font-bold">❌ KONEKSI TERBLOKIR (Butuh Otorisasi Google)</div><div class="text-xs text-slate-300 mt-1 bg-red-950/40 p-3 rounded-xl border border-red-500/30 leading-relaxed"><strong>Penyebab:</strong> Hak Akses Web App di Google Apps Script Anda belum diset 'Anyone'.<br><br><strong>Solusi:</strong> Lakukan Deploy ulang, buat versi deployment baru dan ganti opsi 'Who has access' dari 'Only me' menjadi 'Anyone'.</div>`;
+        return;
+      }
+      try {
+        const parsed = JSON.parse(text);
+        if (parsed.ok) { 
+          diagLog.innerHTML += `<div class="text-emerald-400 mt-2 font-bold">✓ DIAGNOSTIK SELESAI: Koneksi Database Sheets Terhubung dan Berfungsi 100%!</div>`; 
+          showToast('Koneksi berhasil terintegrasi!', 'success'); 
+        } else { 
+          diagLog.innerHTML += `<div class="text-amber-400 mt-2">⚠️ Server Google merespon namun melacak kesalahan: ${escapeHtml(parsed.error)}</div>`; 
+        }
+      } catch(err) { 
+        diagLog.innerHTML += `<div class="text-red-400 mt-2 font-bold">❌ FORMAT SINKRONISASI TIDAK DIKENAL</div><div class="text-xs text-slate-300 mt-1 bg-slate-900 p-3 rounded-lg border border-slate-700">Respons berhasil diperoleh tapi format data bukan JSON. Pastikan script Code.gs disalin seutuhnya.</div>`; 
+      }
+    } catch (err) { 
+      diagLog.innerHTML += `<div class="text-red-400 mt-2 font-bold">❌ GAGAL MENGHUBUNGI SERVER (CORS/Network Block)</div><div class="text-xs text-slate-300 mt-1 bg-red-950/40 p-3 rounded-lg border border-red-500/30 leading-relaxed"><strong>Detail Kesalahan:</strong> ${escapeHtml(err.message)}</div>`; 
+    }
+  }
+
+  const MAX_MEDIA_BYTES = 15 * 1024 * 1024;
+  function validateMediaFile(file) {
+    if (!file) return 'Tidak ada berkas terpilih.';
+    if (file.size > MAX_MEDIA_BYTES) return 'Ukuran berkas terlalu besar! Batas maksimal 15MB.';
+    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return 'Format berkas tidak didukung!';
+    return null;
+  }
+
+  function processMediaFile(file, callback) {
+    const err = validateMediaFile(file);
+    if (err) { callback(null, false, err); return; }
+    const reader = new FileReader();
+    reader.onerror = () => callback(null, false, 'Gagal memproses berkas media.');
+    reader.onload = function (e) {
+      const dataUrl = e.target.result;
+      const isVideo = file.type.startsWith('video/');
+      if (!isVideo) {
+        const img = new Image();
+        img.onerror = () => callback(dataUrl, false, null); 
+        img.onload = function () {
+          try {
+            const canvas = document.createElement('canvas'); 
+            const MAX = 1280; 
+            let w = img.width, h = img.height;
+            if (w > h) { if (w > MAX) { h = h * MAX / w; w = MAX; } } else { if (h > MAX) { w = w * MAX / h; h = MAX; } }
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+
+            // ==========================================================
+            // LOGIKA WATERMARK PREMIUM 3-BLOK BTN
+            // ==========================================================
+            const watermarkHeight = canvas.height * 0.28; 
+            const blockHeight = watermarkHeight / 3; 
+            const startY = canvas.height - watermarkHeight; 
+            const padX = canvas.width * 0.04; 
+            const fontFamily = 'Plus Jakarta Sans, sans-serif'; 
+
+            ctx.shadowColor = 'rgba(0,0,0,0.9)'; 
+            ctx.shadowBlur = 6; 
+            ctx.shadowOffsetX = 2; 
+            ctx.shadowOffsetY = 2; 
+
+            const fillTextFit = (text, x, y, maxWidth, initialFontSize, weight) => {
+              let fontSize = initialFontSize; 
+              ctx.font = `${weight} ${fontSize}px ${fontFamily}`;
+              while (ctx.measureText(text).width > maxWidth && fontSize > 8) { 
+                fontSize -= 0.5; 
+                ctx.font = `${weight} ${fontSize}px ${fontFamily}`; 
+              }
+              ctx.fillText(text, x, y);
+            };
+
+            ctx.shadowColor = 'transparent';
+            ctx.fillStyle = 'rgba(11, 15, 25, 0.65)';
+            ctx.fillRect(0, startY, canvas.width, watermarkHeight);
+            ctx.shadowColor = 'rgba(0,0,0,0.9)';
+
+            // Blok 1: Menggambar Logo BTN dari Drive (Dengan Proxy Anti-CORS)
+            const logoUrl = "https://wsrv.nl/?url=https://drive.google.com/thumbnail?id=1sdbS2eKxEgaw-W9LFKrE2g6ZTsE8bcLp";
+            const logoImg = new Image(); 
+            logoImg.crossOrigin = "Anonymous"; 
+            
+            const drawRemainingWatermark = () => {
+              if (logoImg.complete && logoImg.naturalWidth !== 0) {
+                const logoH = blockHeight * 0.7; 
+                const logoW = (logoImg.naturalWidth / logoImg.naturalHeight) * logoH; 
+                const logoY = startY + (blockHeight * 0.15); 
+                ctx.drawImage(logoImg, padX, logoY, logoW, logoH);
+              } else {
+                ctx.font = `900 ${blockHeight * 0.5}px ${fontFamily}`; 
+                ctx.fillStyle = '#ffffff'; 
+                ctx.textBaseline = 'middle'; 
+                ctx.fillText('BANK BTN', padX, startY + (blockHeight / 2));
+              }
+
+              // Blok 2: Tanggal, Waktu, & Hari
+              const block2Y = startY + blockHeight; 
+              const now = new Date();
+              const jamStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+              const tglStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+              const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']; 
+              const hariStr = days[now.getDay()];
+
+              ctx.font = `700 ${blockHeight * 0.7}px ${fontFamily}`; 
+              ctx.fillStyle = '#ffffff'; 
+              ctx.textBaseline = 'middle'; 
+              ctx.fillText(jamStr, padX, block2Y + (blockHeight / 2));
+
+              const lineX = padX + ctx.measureText(jamStr).width + (canvas.width * 0.03); 
+              ctx.shadowColor = 'transparent'; 
+              ctx.beginPath(); 
+              ctx.moveTo(lineX, block2Y + (blockHeight * 0.2)); 
+              ctx.lineTo(lineX, block2Y + (blockHeight * 0.8)); 
+              ctx.lineWidth = Math.max(3, canvas.width * 0.006); 
+              ctx.strokeStyle = '#ef4444'; 
+              ctx.stroke();
+              ctx.shadowColor = 'rgba(0,0,0,0.9)'; 
+
+              const textX = lineX + (canvas.width * 0.03);
+              ctx.font = `500 ${blockHeight * 0.3}px ${fontFamily}`; 
+              ctx.textBaseline = 'bottom'; 
+              ctx.fillText(tglStr, textX, block2Y + (blockHeight * 0.45)); 
+              ctx.textBaseline = 'top'; 
+              ctx.fillText(hariStr, textX, block2Y + (blockHeight * 0.55)); 
+
+              // Blok 3: Alamat Kantor Cabang & Koordinat GPS Real-time
+              const block3Y = startY + (2 * blockHeight);
+              let baris1 = "Lokasi tidak terdeteksi"; 
+              let baris2 = "Aktifkan GPS Perangkat Anda"; 
+              let baris3 = gpsState.lat !== null && gpsState.lat !== '-' ? `Lat: ${gpsState.lat}, Lng: ${gpsState.lng}` : "Sinyal GPS belum didapatkan...";
+
+              if (gpsState.address && !gpsState.address.includes('Mencari') && !gpsState.address.includes('Gagal')) {
+                const parts = gpsState.address.split(',').map(s => s.trim()).filter(Boolean);
+                if (parts.length > 0) {
+                  if (parts.length >= 4) { 
+                    baris1 = `${parts[0]}, ${parts[1]}`; 
+                    baris2 = parts.slice(2).join(', '); 
+                  } else if (parts.length > 1) { 
+                    baris1 = parts[0]; 
+                    baris2 = parts.slice(1).join(', '); 
+                  } else { 
+                    baris1 = parts[0]; 
+                    baris2 = ""; 
+                  }
+                }
+              } else if (gpsState.lat !== null && gpsState.lat !== '-') {
+                baris1 = "Menggunakan Titik Koordinat GPS"; 
+                baris2 = "Reverse Geocode Sedang Memuat...";
+              }
+
+              const maxTextW = canvas.width - (padX * 2);
+              ctx.fillStyle = '#ffffff'; 
+              ctx.textBaseline = 'bottom'; 
+              fillTextFit(baris1, padX, block3Y + (blockHeight * 0.35), maxTextW, blockHeight * 0.28, '700');
+              ctx.fillStyle = '#f8fafc'; 
+              ctx.textBaseline = 'top'; 
+              fillTextFit(baris2, padX, block3Y + (blockHeight * 0.40), maxTextW, blockHeight * 0.22, '400');
+              ctx.fillStyle = '#fbbf24'; 
+              ctx.textBaseline = 'top'; 
+              fillTextFit(baris3, padX, block3Y + (blockHeight * 0.70), maxTextW, blockHeight * 0.20, '500');
+              ctx.textBaseline = 'alphabetic';
+
+              callback(canvas.toDataURL('image/jpeg', 0.82), false, null);
+            };
+
+            logoImg.onload = drawRemainingWatermark;
+            logoImg.onerror = drawRemainingWatermark;
+            logoImg.src = logoUrl;
+
+          } catch (errCanvas) { 
+            console.error(errCanvas);
+            callback(dataUrl, false, null); 
+          }
+        };
+        img.src = dataUrl;
+      } else { 
+        callback(dataUrl, true, null); 
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function matchFrequency(task, tab) {
+    const combined = (String(task.JENIS || '') + ' ' + String(task.KATEGORI || '')).toLowerCase();
+    if (combined.includes('weekly') || combined.includes('mingguan')) return tab === 'weekly';
+    if (combined.includes('monthly') || combined.includes('bulanan')) return tab === 'monthly';
+    return tab === 'daily';
+  }
+
+  function renderCategoryFilter() {
+    const container = document.getElementById('categoryFilter');
+    const tasksInTab = state.tasks.filter(t => matchFrequency(t, state.activeTab));
+    const excludedKeywords = ['daily', 'weekly', 'monthly', 'harian', 'mingguan', 'bulanan'];
+    const cats = ['all', ...new Set(tasksInTab.map(t => t.KATEGORI).filter(c => c && !excludedKeywords.includes(c.toLowerCase())))].sort();
+    
+    if (cats.length <= 1) { 
+      container.innerHTML = ''; 
+      if (state.activeCategory !== 'all') state.activeCategory = 'all'; 
+      return; 
+    }
+    
+    if (!cats.includes(state.activeCategory)) state.activeCategory = 'all';
+    container.innerHTML = cats.map(cat => {
+      const isActive = state.activeCategory === cat;
+      const label = cat === 'all' ? 'Semua Kategori' : cat;
+      const activeClass = isActive ? 'active' : 'bg-slate-900/60 text-slate-400 hover:text-white';
+      return `<button class="category-chip ${activeClass}" data-cat="${escapeAttr(cat)}">${escapeHtml(label)}</button>`;
+    }).join('');
+    
+    container.querySelectorAll('.category-chip').forEach(btn => { 
+      btn.addEventListener('click', () => { state.activeCategory = btn.dataset.cat; render(); }); 
+    });
+  }
+
+  function updateActiveBranchSelector() {
+    const selector = document.getElementById('activeBranchSelector');
+    if (!selector) return;
+    const savedActive = Storage.get('active_branch_id');
+    if (!state.cabangs || state.cabangs.length === 0) {
+      selector.innerHTML = `<option value="" disabled selected>⚠️ Belum ada cabang (Atur di Setup ⚙️)</option>`;
+      return;
+    }
+    selector.innerHTML = state.cabangs.map(c => {
+      const isSelected = isSameId(c.ID_CABANG, savedActive) ? 'selected' : '';
+      return `<option value="${escapeAttr(c.ID_CABANG)}" ${isSelected}>${escapeHtml(c.ID_CABANG)} - ${escapeHtml(c.NAMA_CABANG)}</option>`;
+    }).join('');
+    if (!savedActive && state.cabangs.length > 0) Storage.set('active_branch_id', state.cabangs[0].ID_CABANG);
+  }
+
+  // Set default active Segmented Control Button
+  function updateStatusFilterUI() {
+    document.querySelectorAll('.status-filter-btn').forEach(btn => {
+      const isActive = btn.dataset.status === state.statusFilter;
+      btn.className = `status-filter-btn flex-1 md:flex-none px-4 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 ${isActive ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`;
+    });
+  }
+
+  function render() {
+    document.getElementById('dateDisplay').textContent = formatDateLabel();
+    document.querySelectorAll('.tab-btn').forEach(btn => { 
+      btn.classList.toggle('tab-active', btn.dataset.freq === state.activeTab); 
+    });
+    
+    renderCategoryFilter();
+    updateStatusFilterUI();
+    
+    const activeBranchId = getActiveBranchId();
+
+    // Filter and Search Logic
+    const filtered = state.tasks.filter(t => {
+      // 1. Tab frequency check
+      if (!matchFrequency(t, state.activeTab)) return false;
+      
+      // 2. Category check
+      if (state.activeCategory !== 'all' && t.KATEGORI !== state.activeCategory) return false;
+      
+      // 3. Search query check
+      if (state.searchQuery) {
+        const query = state.searchQuery.toLowerCase();
+        const inName = (t.KEGIATAN || '').toLowerCase().includes(query);
+        const inSpec = (t.SPESIFIKASI || '').toLowerCase().includes(query);
+        const inCat = (t.KATEGORI || '').toLowerCase().includes(query);
+        if (!inName && !inSpec && !inCat) return false;
+      }
+
+      // 4. Status Check (Pending vs Completed) - Filtered by active ID_CABANG as well
+      const doneActivity = state.activities.find(a => {
+        return isSameId(a.id_tugas, t.id) && 
+               isSameId(a.id_cabang, activeBranchId) && 
+               isActivityInCurrentPeriod(a.timestamp, t.JENIS, t.KATEGORI);
+      });
+      const isDone = !!doneActivity;
+      
+      if (state.statusFilter === 'pending' && isDone) return false;
+      if (state.statusFilter === 'completed' && !isDone) return false;
+
+      return true;
+    });
+
+    const list = document.getElementById('taskList');
+    const empty = document.getElementById('emptyState');
+    const titles = { daily: 'Tugas Harian', weekly: 'Tugas Mingguan', monthly: 'Tugas Bulanan' };
+    document.getElementById('listTitle').textContent = titles[state.activeTab];
+    
+    // Calculate Stats only for the active tab & active branch (regardless of search / filter status)
+    const activeTabAllTasks = state.tasks.filter(t => matchFrequency(t, state.activeTab));
+    let totalDoneInTab = 0;
+    activeTabAllTasks.forEach(t => {
+      const hasDone = state.activities.some(a => 
+        isSameId(a.id_tugas, t.id) && 
+        isSameId(a.id_cabang, activeBranchId) && 
+        isActivityInCurrentPeriod(a.timestamp, t.JENIS, t.KATEGORI)
+      );
+      if (hasDone) totalDoneInTab++;
+    });
+
+    const tabTotal = activeTabAllTasks.length;
+    const tabPending = tabTotal - totalDoneInTab;
+    const tabPercentage = tabTotal === 0 ? 0 : Math.round((totalDoneInTab / tabTotal) * 100);
+
+    document.getElementById('statTotal').textContent = tabTotal;
+    document.getElementById('statDone').textContent = totalDoneInTab;
+    document.getElementById('statPending').textContent = tabPending;
+    document.getElementById('progressPercentage').textContent = tabPercentage + '%';
+    document.getElementById('progressText').textContent = tabPercentage + '%';
+    
+    const circle = document.getElementById('progressCircle');
+    circle.style.strokeDashoffset = 150.8 - (tabPercentage / 100) * 150.8;
+
+    if (filtered.length === 0) {
+      list.innerHTML = ''; 
+      empty.classList.remove('hidden');
+    } else {
+      empty.classList.add('hidden');
+      list.innerHTML = filtered.map(t => {
+        const doneActivity = state.activities.find(a => {
+          return isSameId(a.id_tugas, t.id) && 
+                 isSameId(a.id_cabang, activeBranchId) && 
+                 isActivityInCurrentPeriod(a.timestamp, t.JENIS, t.KATEGORI);
+        });
+        const isDone = !!doneActivity;
+        const catStyle = getCategoryStyle(t.KATEGORI);
+        const hasMedia = isDone && doneActivity.fotos && doneActivity.fotos.length > 0;
+        let timeStr = '';
+        if (isDone && doneActivity.timestamp) {
+          const actDate = parseRobustDate(doneActivity.timestamp);
+          if (!isNaN(actDate.getTime())) timeStr = `${actDate.getHours().toString().padStart(2, '0')}:${actDate.getMinutes().toString().padStart(2, '0')} WIB`;
+        }
+        
+        return `
+          <div class="task-item p-4 rounded-2xl bg-slate-900/40 border border-slate-800/80 ${isDone ? 'completed border-l-4 border-l-emerald-500' : 'border-l-4 border-l-indigo-600/40'} cursor-pointer" data-task-id="${escapeAttr(t.id)}">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div class="flex items-start gap-3 flex-1 min-w-0">
+                <div class="checkbox mt-1 ${isDone ? 'checked' : ''}"></div>
+                <div class="flex-1 min-w-0">
+                  <div class="font-bold text-sm md:text-base tracking-tight ${isDone ? 'line-through text-slate-500 font-normal' : 'text-slate-100'}">${escapeHtml(t.KEGIATAN)}</div>
+                  <div class="flex items-center gap-2 mt-2 flex-wrap">
+                    ${t.KATEGORI ? `<span class="cat-badge" style="background:${catStyle.bg};color:${catStyle.color}">${escapeHtml(t.KATEGORI)}</span>` : ''}
+                    ${isDone ? '<span class="text-[10px] text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/20">Selesai</span>' : '<span class="text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded-full">Belum Selesai</span>'}
+                  </div>
+                  ${t.SPESIFIKASI ? `<div class="spec-text ${isDone ? 'line-through opacity-50' : ''}">${escapeHtml(t.SPESIFIKASI)}</div>` : ''}
+                </div>
+              </div>
+              
+              <!-- Completion Indicator Section -->
+              ${isDone ? `
+                <div class="mini-detail-container flex items-start gap-3 bg-slate-950/80 p-3 rounded-xl border border-white/5 flex-shrink-0 transition duration-200 hover:border-indigo-500/30 w-full md:w-auto md:max-w-xs" onclick="event.stopPropagation(); handleTaskRowClick('${t.id}')">
+                  <div class="mini-detail-text text-left flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1 justify-between">
+                      <span class="text-[9px] text-indigo-400 font-extrabold uppercase tracking-wider">Catatan</span>
+                      ${timeStr ? `<span class="text-[9px] text-slate-400 font-mono bg-slate-900 px-1.5 py-0.5 rounded">${timeStr}</span>` : ''}
+                    </div>
+                    <div class="text-xs text-slate-300 break-words whitespace-pre-wrap leading-relaxed italic truncate">${escapeHtml(doneActivity.detail || 'Selesai tanpa catatan')}</div>
+                  </div>
+                  ${hasMedia ? `
+                    <div class="flex items-center gap-1 shrink-0">
+                      ${doneActivity.fotos.map(url => `
+                        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 overflow-hidden flex items-center justify-center relative">
+                          ${isVideoMedia(url) ? `<span class="text-xs">🎥</span>` : `<img src="${escapeAttr(url)}" class="w-full h-full object-cover" onerror="this.outerHTML='<span class=&quot;text-[10px]&quot;>🖼️</span>'" />`}
+                        </div>
+                      `).join('')}
+                    </div>
+                  ` : ''}
+                </div>
+              ` : `
+                <button type="button" class="task-record-btn w-full md:w-auto text-center bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex-shrink-0 flex items-center justify-center gap-1 border border-indigo-500/30" data-task-id="${escapeAttr(t.id)}">
+                  <span>📝</span> Catat Progres
+                </button>
+              `}
+            </div>
+          </div>`;
+      }).join('');
+
+      // Add Event Listeners
+      list.querySelectorAll('.task-item').forEach(row => { 
+        row.addEventListener('click', (e) => { 
+          if (e.target.closest('.task-record-btn')) return; 
+          handleTaskRowClick(row.dataset.taskId); 
+        }); 
+      });
+      list.querySelectorAll('.task-record-btn').forEach(btn => { 
+        btn.addEventListener('click', (e) => { 
+          e.stopPropagation(); 
+          handleTaskRowClick(btn.dataset.taskId); 
+        }); 
       });
     }
 
-    const manifest = {
-      name: "DBMS Daily Checklist",
-      short_name: "BTN Checklist",
-      start_url: "/",
-      display: "standalone",
-      background_color: "#0b0f19",
-      theme_color: "#0b0f19",
-      icons: [{ src: "https://placehold.co/192x192/002d72/ffffff?text=BTN", sizes: "192x192", type: "image/png" }]
-    };
-    const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-    const manifestUrl = URL.createObjectURL(blob);
-    const link = document.createElement('link');
-    link.rel = 'manifest';
-    link.href = manifestUrl;
-    document.head.appendChild(link);
+    updateActiveBranchSelector();
+    updateConnectionUI();
+  }
 
-    /* ... existing application logic ... */
-    // (Rest of your app logic goes here)
+  window.removeCompletionMedia = function(index) { 
+    completionState.fotos.splice(index, 1); 
+    renderCompletionPreviews(); 
+  };
+
+  function renderCompletionPreviews() {
+    const area = document.getElementById('completionMediaPreviewArea'), placeholder = document.getElementById('mediaPlaceholder');
+    const menu = document.getElementById('mediaSelectMenu'), badge = document.getElementById('completionPhotoCountBadge');
+    badge.textContent = `${completionState.fotos.length} / 3`;
+    
+    if (completionState.fotos.length > 0) {
+      area.classList.remove('hidden');
+      placeholder.innerHTML = completionState.fotos.map((url, i) => {
+        const isVideo = isVideoMedia(url);
+        const bg = isVideo 
+          ? `<video src="${escapeAttr(url)}#t=0.1" preload="metadata" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-800"></video><div class="absolute inset-0 flex items-center justify-center pointer-events-none"><span class="text-lg drop-shadow">🎥</span></div>` 
+          : `<img src="${escapeAttr(url)}" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-800" onerror="this.outerHTML='<div class=&quot;w-20 h-20 sm:w-24 sm:h-24 border border-slate-800 rounded-xl flex items-center justify-center text-xs text-red-400 bg-slate-900&quot;>⚠️ Error</div>'" />`;
+        
+        return `
+          <div class="relative flex-shrink-0 mt-1 mr-2 cursor-pointer" onclick="window.openMediaViewer('${escapeAttr(url)}'); event.stopPropagation();">
+            ${bg}
+            <button class="absolute -top-1.5 -right-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-lg text-xs font-bold" onclick="removeCompletionMedia(${i}); event.stopPropagation();">&times;</button>
+          </div>`;
+      }).join('');
+    } else { 
+      area.classList.add('hidden'); 
+      placeholder.innerHTML = ''; 
+    }
+    
+    if (completionState.fotos.length >= 3) menu.classList.add('hidden'); 
+    else menu.classList.remove('hidden');
+  }
+
+  function handleTaskRowClick(taskId) {
+    const task = state.tasks.find(t => isSameId(t.id, taskId));
+    if (!task) return;
+    const activeBranchId = getActiveBranchId();
+    const existingActivity = state.activities.find(a => isSameId(a.id_tugas, task.id) && isSameId(a.id_cabang, activeBranchId) && isActivityInCurrentPeriod(a.timestamp, task.JENIS, task.KATEGORI));
+    
+    completionState = { 
+      activeTaskId: task.id, 
+      detail: '', 
+      fotos: [], 
+      isViewOnly: !!existingActivity, 
+      activeActivityTimestamp: existingActivity ? existingActivity.timestamp : null, 
+      isProcessingMedia: false 
+    };
+    
+    document.getElementById('completionTaskName').textContent = task.KEGIATAN;
+    document.getElementById('completionTaskCategory').textContent = task.KATEGORI || 'Tanpa Kategori';
+    document.getElementById('completionTaskCategory').style.background = getCategoryStyle(task.KATEGORI).bg;
+    document.getElementById('completionTaskCategory').style.color = getCategoryStyle(task.KATEGORI).color;
+    
+    let fType = String(task.JENIS || '').trim(); 
+    if (!fType) fType = 'daily';
+    const freqLabel = { daily: 'Harian 🌅', weekly: 'Mingguan 📅', monthly: 'Bulanan 🗓️' };
+    
+    document.getElementById('completionTaskFreq').textContent = freqLabel[fType] || fType;
+    document.getElementById('completionTaskSpec').innerHTML = task.SPESIFIKASI ? `<b>Spesifikasi:</b><br>${task.SPESIFIKASI}` : '<i>Spesifikasi tidak tertera.</i>';
+    
+    const detailTextarea = document.getElementById('completionDetail');
+    const completionActions = document.getElementById('completionActions');
+    const viewOnlyActions = document.getElementById('viewOnlyActions');
+    document.getElementById('completionMediaUploading').classList.add('hidden');
+    
+    if (existingActivity) {
+      document.getElementById('completionModalHeaderTitle').textContent = '✏️ Edit Tugas Selesai';
+      document.getElementById('completionModalHeaderSubtitle').textContent = 'Perbarui catatan atau hapus status selesai pengerjaan';
+      detailTextarea.value = existingActivity.detail || '';
+      detailTextarea.disabled = false;
+      completionActions.classList.add('hidden'); 
+      viewOnlyActions.classList.remove('hidden'); 
+      viewOnlyActions.classList.add('flex');
+      completionState.fotos = [...(existingActivity.fotos || [])];
+      renderCompletionPreviews();
+    } else {
+      document.getElementById('completionModalHeaderTitle').textContent = '📝 Selesaikan Tugas';
+      document.getElementById('completionModalHeaderSubtitle').textContent = 'Isi progres pengerjaan dan lampirkan bukti foto/video';
+      detailTextarea.value = '';
+      detailTextarea.disabled = false;
+      completionActions.classList.remove('hidden'); 
+      viewOnlyActions.classList.add('hidden'); 
+      viewOnlyActions.classList.remove('flex');
+      document.getElementById('inputCamPhoto').value = ''; 
+      document.getElementById('inputCamVideo').value = ''; 
+      document.getElementById('inputUploadAll').value = '';
+      renderCompletionPreviews();
+    }
+    showModalWithHistory('taskCompletionModal');
+  }
+  
+  window.handleTaskRowClick = handleTaskRowClick;
+
+  function handleMediaInput(file) {
+    if (!file) return;
+    completionState.isProcessingMedia = true;
+    document.getElementById('completionMediaUploading').classList.remove('hidden');
+    processMediaFile(file, (dataUrl, isVideo, errMsg) => {
+      completionState.isProcessingMedia = false;
+      document.getElementById('completionMediaUploading').classList.add('hidden');
+      if (errMsg) { showToast(errMsg, 'error'); return; }
+      if (completionState.fotos.length < 3) completionState.fotos.push(dataUrl);
+      renderCompletionPreviews();
+    });
+  }
+
+  document.getElementById('inputCamPhoto').addEventListener('change', e => { handleMediaInput(e.target.files[0]); e.target.value = ''; });
+  document.getElementById('inputCamVideo').addEventListener('change', e => { handleMediaInput(e.target.files[0]); e.target.value = ''; });
+  document.getElementById('inputUploadAll').addEventListener('change', e => { handleMediaInput(e.target.files[0]); e.target.value = ''; });
+
+  async function saveCompletionTask() {
+    if (isSavingCompletion) return;
+    const detailValue = document.getElementById('completionDetail').value.trim();
+    if (!detailValue && completionState.fotos.length === 0) { 
+      showToast('Wajib menulis catatan progres atau melampirkan minimal 1 foto/video!', 'warning'); 
+      return; 
+    }
+    if (completionState.isProcessingMedia) { 
+      showToast('Harap tunggu, media sedang dalam proses...', 'warning'); 
+      return; 
+    }
+    const task = state.tasks.find(t => isSameId(t.id, completionState.activeTaskId));
+    if (!task) { showToast('Kesalahan: Tugas tidak terdeteksi.', 'error'); return; }
+    
+    isSavingCompletion = true;
+    const saveBtn = document.getElementById('saveCompletion');
+    const originalText = saveBtn.innerHTML; 
+    saveBtn.disabled = true; 
+    saveBtn.innerHTML = '<span class="spinner"></span> Mengirim...';
+    
+    const activeBranchId = getActiveBranchId();
+    const timestamp = new Date().toISOString();
+    const newActivity = { 
+      timestamp: timestamp, 
+      id_cabang: activeBranchId,
+      aksi: 'SELESAI', 
+      id_tugas: task.id, 
+      nama_tugas: task.KEGIATAN, 
+      jenis: task.JENIS, 
+      kategori: task.KATEGORI || '', 
+      detail: detailValue, 
+      fotos: [...completionState.fotos] 
+    };
+    
+    state.activities.unshift(newActivity);
+    saveState();
+    showToast(`✓ "${task.KEGIATAN}" diselesaikan!`, 'success');
+    safeCloseModal('taskCompletionModal');
+    render();
+    
+    if (state.settings.webAppUrl) {
+      try {
+        const result = await apiCall('add_activity', { 
+          activity: { id: task.id, KEGIATAN: task.KEGIATAN, JENIS: task.JENIS, KATEGORI: task.KATEGORI || '' }, 
+          detail: detailValue, 
+          fotos: completionState.fotos,
+          id_cabang: activeBranchId
+        });
+        if (result && result.ok) {
+          const verifyRes = await apiGet('list_activities'); 
+          if (applyActivitiesResponse(verifyRes)) { saveState(); render(); }
+          if (result.warning) showToast(result.warning, 'warning'); 
+          else showToast('✓ Sinkronisasi ke Google Sheets Berhasil!', 'success');
+        } else { 
+          showToast('Data tersimpan secara lokal. Gagal menyelaraskan ke cloud.', 'warning'); 
+        }
+      } catch (err) { 
+        showToast('Tersimpan secara lokal. Jaringan Web App sibuk.', 'warning'); 
+      }
+    }
+    isSavingCompletion = false; 
+    saveBtn.disabled = false; 
+    saveBtn.innerHTML = originalText;
+  }
+
+  async function updateCompletionTask() {
+    if (isSavingCompletion) return;
+    const detailValue = document.getElementById('completionDetail').value.trim();
+    if (completionState.isProcessingMedia) { showToast('Sedang memproses media pendukung...', 'warning'); return; }
+    const task = state.tasks.find(t => isSameId(t.id, completionState.activeTaskId));
+    if (!task) return;
+    
+    const activeBranchId = getActiveBranchId();
+    const existingActivityIndex = state.activities.findIndex(a => isSameId(a.id_tugas, task.id) && isSameId(a.id_cabang, activeBranchId) && isActivityInCurrentPeriod(a.timestamp, task.JENIS, task.KATEGORI));
+    if (existingActivityIndex === -1) return;
+    const oldActivity = state.activities[existingActivityIndex];
+    
+    isSavingCompletion = true;
+    const saveBtn = document.getElementById('btnUpdateCompletionActivity');
+    const originalText = saveBtn.innerHTML; 
+    saveBtn.disabled = true; 
+    saveBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
+    
+    state.activities[existingActivityIndex].detail = detailValue;
+    state.activities[existingActivityIndex].fotos = [...completionState.fotos];
+    saveState();
+    showToast(`✓ Catatan berhasil diperbarui!`, 'success');
+    safeCloseModal('taskCompletionModal');
+    render();
+    
+    if (state.settings.webAppUrl) {
+      try {
+        const result = await apiCall('update_activity', { 
+          timestamp: oldActivity.timestamp, 
+          activity: { id: task.id, KEGIATAN: task.KEGIATAN, JENIS: task.JENIS, KATEGORI: task.KATEGORI || '' }, 
+          detail: detailValue, 
+          fotos: completionState.fotos,
+          id_cabang: activeBranchId
+        });
+        if (result && result.warning) showToast(result.warning, 'warning');
+        else if (!result || !result.ok) showToast('Terupdate lokal. Sinkronisasi Web App gagal.', 'warning');
+        else showToast('✓ Pembaruan berhasil disimpan ke Google Sheets!', 'success');
+        
+        const verifyRes = await apiGet('list_activities');
+        if (applyActivitiesResponse(verifyRes)) { saveState(); render(); }
+      } catch (err) { 
+        showToast('Terupdate secara lokal.', 'warning'); 
+      }
+    }
+    isSavingCompletion = false; 
+    saveBtn.disabled = false; 
+    saveBtn.innerHTML = originalText;
+  }
+
+  async function deleteCompletionActivity() {
+    const task = state.tasks.find(t => isSameId(t.id, completionState.activeTaskId));
+    if (!task) return;
+    const activeBranchId = getActiveBranchId();
+    showCustomConfirm('Batalkan Penyelesaian Tugas', `Apakah Anda yakin ingin membatalkan status pengerjaan selesai pada tugas "${task.KEGIATAN}"?`, true, async () => {
+      const removedActivity = state.activities.find(a => isSameId(a.id_tugas, task.id) && isSameId(a.id_cabang, activeBranchId) && isActivityInCurrentPeriod(a.timestamp, task.JENIS, task.KATEGORI));
+      state.activities = state.activities.filter(a => !(isSameId(a.id_tugas, task.id) && isSameId(a.id_cabang, activeBranchId) && isActivityInCurrentPeriod(a.timestamp, task.JENIS, task.KATEGORI)));
+      saveState();
+      
+      showToast(`Status selesai "${task.KEGIATAN}" telah dibatalkan.`, 'info');
+      safeCloseModal('taskCompletionModal');
+      render();
+      
+      if (state.settings.webAppUrl && removedActivity) {
+        const result = await apiCall('delete_activity', { timestamp: removedActivity.timestamp, id_tugas: removedActivity.id_tugas });
+        if (!result || !result.ok) showToast('Dibatalkan secara lokal. Sinkronisasi server gagal.', 'warning');
+        else showToast('✓ Sinkronisasi pembatalan ke Sheets Berhasil!', 'success');
+        await syncAll(); 
+        render();
+      }
+    });
+  }
+
+  document.getElementById('saveCompletion').addEventListener('click', saveCompletionTask);
+  document.getElementById('btnUpdateCompletionActivity').addEventListener('click', updateCompletionTask);
+  document.getElementById('btnDeleteCompletionActivity').addEventListener('click', deleteCompletionActivity);
+
+  window.removeRecordMedia = function(index) { 
+    recordState.fotos.splice(index, 1); 
+    renderRecordPreviews(); 
+  };
+
+  function renderRecordPreviews() {
+    const area = document.getElementById('photoPreviewArea'), inner = document.getElementById('recordMediaPreviewInner');
+    const dropLabel = document.getElementById('recordPhotoDropLabel'), badge = document.getElementById('recordPhotoCountBadge');
+    badge.textContent = `${recordState.fotos.length} / 3`;
+    
+    if (recordState.fotos.length > 0) {
+      area.classList.remove('hidden');
+      inner.innerHTML = recordState.fotos.map((url, i) => {
+        const isVideo = isVideoMedia(url);
+        const bg = isVideo 
+          ? `<video src="${escapeAttr(url)}#t=0.1" preload="metadata" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-800"></video><div class="absolute inset-0 flex items-center justify-center pointer-events-none"><span class="text-xl drop-shadow">🎥</span></div>` 
+          : `<img src="${escapeAttr(url)}" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-slate-800" />`;
+        
+        return `
+          <div class="relative flex-shrink-0 mt-1 mr-2 cursor-pointer" onclick="window.openMediaViewer('${escapeAttr(url)}'); event.stopPropagation();">
+            ${bg}
+            <button type="button" class="absolute -top-1.5 -right-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-lg text-xs font-bold" onclick="removeRecordMedia(${i}); event.stopPropagation();">&times;</button>
+          </div>`;
+      }).join('');
+    } else { 
+      area.classList.add('hidden'); 
+      inner.innerHTML = ''; 
+    }
+    
+    if (recordState.fotos.length >= 3) dropLabel.classList.add('hidden'); 
+    else dropLabel.classList.remove('hidden');
+  }
+
+  function renderKegiatanDropdown() {
+    const cat = recordState.selectedCategory;
+    const trigger = document.getElementById('kegiatanTrigger'), triggerContent = document.getElementById('kegiatanTriggerContent');
+    const menu = document.getElementById('kegiatanMenu'), countEl = document.getElementById('kegiatanCount');
+    
+    const activeBranchId = getActiveBranchId();
+    const tasks = cat ? state.tasks.filter(t => { 
+      if (t.KATEGORI !== cat) return false; 
+      return !state.activities.some(a => isSameId(a.id_tugas, t.id) && isSameId(a.id_cabang, activeBranchId) && isActivityInCurrentPeriod(a.timestamp, t.JENIS, t.KATEGORI)); 
+    }) : [];
+    
+    countEl.textContent = tasks.length > 0 ? `(${tasks.length} tugas belum dikerjakan)` : '';
+    
+    if (!cat) { 
+      trigger.disabled = true; 
+      triggerContent.innerHTML = '<span class="text-slate-500 text-sm">Harap tentukan kategori terlebih dahulu</span>'; 
+      menu.classList.add('hidden'); 
+      return; 
+    }
+    
+    trigger.disabled = false;
+    if (tasks.length === 0) { 
+      triggerContent.innerHTML = `<span class="text-slate-400 text-sm font-semibold">Semua tugas kategori ini sudah beres!</span>`; 
+      menu.innerHTML = `<div class="single-dropdown-empty text-slate-500 text-xs text-center py-5">Hebat! Seluruh tugas kategori ini selesai dikerjakan harian.</div>`; 
+      return; 
+    }
+    
+    const selectedTask = recordState.selectedTaskId ? tasks.find(t => t.id === recordState.selectedTaskId) : null;
+    if (selectedTask) {
+      triggerContent.innerHTML = `
+        <div class="selected-value flex items-center justify-between w-full">
+          <span class="text-slate-200 text-sm font-semibold truncate pr-2">${escapeHtml(selectedTask.KEGIATAN)}</span>
+          <span class="bg-red-500/20 hover:bg-red-500/40 text-red-300 w-5 h-5 rounded-full flex items-center justify-center text-xs shrink-0" id="clearSelectionBtn">&times;</span>
+        </div>`;
+      setTimeout(() => { 
+        const clearBtn = document.getElementById('clearSelectionBtn'); 
+        if (clearBtn) {
+          clearBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            recordState.selectedTaskId = null; 
+            renderKegiatanDropdown(); 
+          }); 
+        }
+      }, 0);
+    } else { 
+      triggerContent.innerHTML = `<span class="text-slate-400 text-sm font-medium">-- Pilih Tugas Checklist (${tasks.length}) --</span>`; 
+    }
+    
+    const freqLabel = { daily: '🌅 Harian', weekly: '📅 Mingguan', monthly: '🗓️ Bulanan' };
+    menu.innerHTML = tasks.map(t => {
+      const selected = recordState.selectedTaskId === t.id; 
+      let fType = String(t.JENIS || '').trim(); 
+      if (!fType) fType = 'daily';
+      
+      return `
+        <div class="single-dropdown-item ${selected ? 'selected' : ''}" data-task-id="${escapeAttr(t.id)}">
+          <div class="checkbox ${selected ? 'checked' : ''} shrink-0 mt-0.5"></div>
+          <div class="item-content min-w-0 flex-1">
+            <div class="item-name font-bold text-slate-200 text-xs sm:text-sm truncate">${escapeHtml(t.KEGIATAN)}</div>
+            <div class="item-meta flex items-center gap-2 mt-1">
+              <span class="freq-badge freq-${fType}">${freqLabel[fType] || fType}</span>
+            </div>
+            ${t.SPESIFIKASI ? `<div class="item-spec text-slate-500 text-[10px] mt-1 line-clamp-2 italic">${escapeHtml(t.SPESIFIKASI)}</div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+    
+    menu.querySelectorAll('.single-dropdown-item').forEach(item => { 
+      item.addEventListener('click', (e) => { 
+        e.stopPropagation(); 
+        recordState.selectedTaskId = item.dataset.taskId; 
+        closeKegiatanDropdown(); 
+        renderKegiatanDropdown(); 
+      }); 
+    });
+  }
+
+  function toggleKegiatanDropdown() { 
+    const trigger = document.getElementById('kegiatanTrigger'), menu = document.getElementById('kegiatanMenu'); 
+    if (trigger.disabled) return; 
+    recordState.dropdownOpen = !recordState.dropdownOpen; 
+    trigger.classList.toggle('open', recordState.dropdownOpen); 
+    menu.classList.toggle('hidden', !recordState.dropdownOpen); 
+  }
+  
+  function closeKegiatanDropdown() { 
+    const trigger = document.getElementById('kegiatanTrigger'), menu = document.getElementById('kegiatanMenu'); 
+    recordState.dropdownOpen = false; 
+    trigger.classList.remove('open'); 
+    menu.classList.add('hidden'); 
+  }
+  
+  document.addEventListener('click', (e) => { 
+    const container = document.getElementById('kegiatanDropdownContainer'); 
+    if (container && !container.contains(e.target) && recordState.dropdownOpen) { 
+      closeKegiatanDropdown(); 
+    } 
+  });
+
+  function refreshRecordCategoryOptions(preserveSelection) {
+    const activeBranchId = getActiveBranchId();
+    const categoriesWithPendingTasks = state.tasks.filter(t => { 
+      return !state.activities.some(a => 
+        isSameId(a.id_tugas, t.id) && 
+        isSameId(a.id_cabang, activeBranchId) && 
+        isActivityInCurrentPeriod(a.timestamp, t.JENIS, t.KATEGORI)
+      ); 
+    }).map(t => t.KATEGORI).filter(Boolean);
+    
+    const uniqueCats = [...new Set(categoriesWithPendingTasks)].sort();
+    const select = document.getElementById('recordCategory'), oldVal = preserveSelection ? select.value : '';
+    select.innerHTML = '<option value="">-- Pilih Kategori --</option>' + uniqueCats.map(c => `<option value="${escapeAttr(c)}">${escapeHtml(c)}</option>`).join('');
+    
+    const emptyAlert = document.getElementById('recordEmptyAlert');
+    if (uniqueCats.length === 0) { 
+      emptyAlert.classList.remove('hidden'); 
+      select.disabled = true; 
+    } else { 
+      emptyAlert.classList.add('hidden'); 
+      select.disabled = false; 
+    }
+    if (preserveSelection && uniqueCats.includes(oldVal)) { 
+      select.value = oldVal; 
+    } else { 
+      select.value = ''; 
+      recordState.selectedCategory = ''; 
+      recordState.selectedTaskId = null; 
+    }
+  }
+
+  function openRecordModal() {
+    recordState = { selectedCategory: '', selectedTaskId: null, detail: '', fotos: [], dropdownOpen: false, isProcessingMedia: false };
+    document.getElementById('recordDetail').value = ''; 
+    document.getElementById('photoInput').value = '';
+    document.getElementById('recordLoadingAlert').classList.add('hidden'); 
+    document.getElementById('recordMediaProcessing').classList.add('hidden');
+    refreshRecordCategoryOptions(false);
+    showModalWithHistory('recordModal');
+    renderKegiatanDropdown(); 
+    renderRecordPreviews();
+  }
+
+  function handleLegacyMediaInput(file) {
+    if (!file) return;
+    recordState.isProcessingMedia = true; 
+    document.getElementById('recordMediaProcessing').classList.remove('hidden');
+    processMediaFile(file, (dataUrl, isVideo, errMsg) => {
+      recordState.isProcessingMedia = false; 
+      document.getElementById('recordMediaProcessing').classList.add('hidden');
+      if (errMsg) { showToast(errMsg, 'error'); return; }
+      if (recordState.fotos.length < 3) recordState.fotos.push(dataUrl);
+      renderRecordPreviews();
+    });
+  }
+
+  document.getElementById('recordPhotoDropLabel').addEventListener('click', (e) => { 
+    if (e.target.id === 'photoInput') return; 
+    document.getElementById('photoInput').click(); 
+  });
+  document.getElementById('photoInput').addEventListener('change', e => { 
+    handleLegacyMediaInput(e.target.files[0]); 
+    e.target.value = ''; 
+  });
+
+  async function saveRecord() {
+    if (isSavingRecord) return;
+    if (!recordState.selectedTaskId) { showToast('Anda belum menentukan kegiatan pengerjaan.', 'error'); return; }
+    if (recordState.isProcessingMedia) { showToast('Tunggu, media pendukung masih diproses.', 'warning'); return; }
+    
+    const selectedTask = state.tasks.find(t => t.id === recordState.selectedTaskId);
+    if (!selectedTask) { showToast('Kesalahan sistem, silakan muat ulang.', 'error'); return; }
+    
+    isSavingRecord = true;
+    const saveBtn = document.getElementById('saveRecord'); 
+    const originalText = saveBtn.innerHTML; 
+    saveBtn.disabled = true; 
+    saveBtn.innerHTML = '<span class="spinner"></span> Mengirim...';
+    
+    const activeBranchId = getActiveBranchId();
+    const activity = { id: selectedTask.id, KEGIATAN: selectedTask.KEGIATAN, JENIS: selectedTask.JENIS, KATEGORI: selectedTask.KATEGORI };
+    
+    state.activities.unshift({ 
+      timestamp: new Date().toISOString(), 
+      id_cabang: activeBranchId,
+      aksi: 'SELESAI', 
+      id_tugas: activity.id, 
+      nama_tugas: activity.KEGIATAN, 
+      jenis: activity.JENIS, 
+      kategori: activity.KATEGORI, 
+      detail: recordState.detail, 
+      fotos: [...recordState.fotos] 
+    });
+    
+    saveState();
+    try {
+      if (state.settings.webAppUrl) {
+        const result = await apiCall('add_activity', { 
+          activity, 
+          detail: recordState.detail, 
+          fotos: recordState.fotos,
+          id_cabang: activeBranchId
+        });
+        if (result && result.ok) {
+          const verifyRes = await apiGet('list_activities'); 
+          if (applyActivitiesResponse(verifyRes)) saveState();
+          if (result.warning) showToast(result.warning, 'warning'); 
+          else showToast('✓ Aktivitas terekam dan sinkron ke Sheets!', 'success');
+        } else { 
+          showToast('Tersimpan di perangkat lokal. Gagal sinkron ke Sheets.', 'warning'); 
+        }
+      } else { 
+        showToast('✓ Aktivitas berhasil terekam secara lokal!', 'success'); 
+      }
+    } catch (err) { 
+      showToast('Tersimpan lokal. Jaringan sibuk.', 'warning'); 
+    } finally {
+      safeCloseModal('recordModal');
+      isSavingRecord = false; 
+      saveBtn.disabled = false; 
+      saveBtn.innerHTML = originalText; 
+      render();
+    }
+  }
+
+  function renderHistory() {
+    const container = document.getElementById('historyList'), empty = document.getElementById('historyEmpty');
+    const activeBranchId = getActiveBranchId();
+
+    // Saring log aktivitas hanya untuk kantor cabang yang saat ini aktif dipilih
+    const filteredActivities = state.activities.filter(act => isSameId(act.id_cabang, activeBranchId));
+
+    if (filteredActivities.length === 0) { 
+      container.innerHTML = ''; 
+      empty.classList.remove('hidden'); 
+      return; 
+    }
+    
+    empty.classList.add('hidden');
+    container.innerHTML = filteredActivities.map(act => {
+      const d = parseRobustDate(act.timestamp);
+      const timeStr = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')} WIB`;
+      const catStyle = getCategoryStyle(act.kategori);
+      const hasMedia = act.fotos && act.fotos.length > 0;
+      let mediaHtml = '';
+      
+      if (hasMedia) {
+        mediaHtml = '<div class="flex gap-2 mt-3 overflow-x-auto pb-2 scrollbar">' + act.fotos.map(url => {
+          const isVideo = isVideoMedia(url);
+          if (isVideo) {
+            return `
+              <div class="w-14 h-14 sm:w-16 sm:h-16 border border-slate-700 bg-black flex-shrink-0 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer relative" onclick="window.openMediaViewer('${escapeAttr(url)}')">
+                <span class="text-lg absolute z-10 drop-shadow">🎥</span>
+                <video src="${escapeAttr(url)}#t=0.1" preload="metadata" class="w-full h-full object-cover opacity-60"></video>
+              </div>`;
+          } else { 
+            return `<img src="${escapeAttr(url)}" class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-slate-700 flex-shrink-0 object-cover cursor-pointer" onclick="window.openMediaViewer('${escapeAttr(url)}')" onerror="this.outerHTML='<div class=&quot;w-14 h-14 sm:w-16 sm:h-16 border border-slate-700 rounded-xl flex items-center justify-center text-red-400 bg-slate-900 text-xs&quot;>⚠️ Error</div>'" />`; 
+          }
+        }).join('') + '</div>';
+      }
+      
+      return `
+        <div class="activity-card p-4 rounded-xl bg-slate-900/40 border border-slate-800 flex flex-col items-start w-full transition hover:border-indigo-500/15">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs text-slate-400 font-mono">${timeStr}</span>
+            <span class="text-[10px] bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20 font-bold uppercase">${escapeHtml(act.aksi)}</span>
+          </div>
+          <div class="font-bold text-slate-100 text-sm md:text-base mb-1.5">${escapeHtml(act.nama_tugas)}</div>
+          <div class="flex gap-1.5 flex-wrap text-xs mb-2">
+            ${act.kategori ? `<span style="background:${catStyle.bg};color:${catStyle.color}" class="px-2 py-0.5 rounded font-semibold text-[10px]">${escapeHtml(act.kategori)}</span>` : ''}
+            <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded uppercase tracking-wider text-[10px] font-bold">${escapeHtml(act.jenis)}</span>
+          </div>
+          ${act.detail ? `<div class="mt-1 w-full text-xs sm:text-sm text-slate-300 bg-slate-950/80 p-3 rounded-xl italic border border-white/5 break-words whitespace-pre-wrap leading-relaxed">"${escapeHtml(act.detail)}"</div>` : ''}
+          ${mediaHtml}
+        </div>`;
+    }).join('');
+  }
+
+  function populateManageCategories() {
+    const datalist = document.getElementById('categoryList'), allCats = [...new Set(state.tasks.map(t => t.KATEGORI).filter(Boolean))].sort();
+    datalist.innerHTML = allCats.map(c => `<option value="${escapeAttr(c)}">`).join('');
+  }
+
+  function renderManageTasks() {
+    const container = document.getElementById('masterTaskList'), empty = document.getElementById('masterTaskEmpty');
+    if (state.tasks.length === 0) { 
+      container.innerHTML = ''; 
+      empty.classList.remove('hidden'); 
+    } else {
+      empty.classList.add('hidden');
+      container.innerHTML = state.tasks.map(t => {
+        const catStyle = getCategoryStyle(t.KATEGORI), freqLabel = { daily: 'Harian', weekly: 'Mingguan', monthly: 'Bulanan' };
+        return `
+          <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex justify-between items-center gap-3">
+            <div class="flex-1 min-w-0">
+              <div class="font-bold text-xs sm:text-sm mb-1 text-slate-100 truncate">${escapeHtml(t.KEGIATAN)}</div>
+              <div class="flex gap-1.5 flex-wrap">
+                <span class="text-[9px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-bold uppercase">${freqLabel[t.JENIS] || t.JENIS}</span>
+                ${t.KATEGORI ? `<span class="text-[9px] px-2 py-0.5 rounded font-semibold" style="background:${catStyle.bg};color:${catStyle.color}">${escapeHtml(t.KATEGORI)}</span>` : ''}
+              </div>
+            </div>
+            <button type="button" class="manage-delete-btn w-8 h-8 rounded-lg bg-red-950/40 text-red-400 hover:bg-red-500 hover:text-white flex items-center justify-center transition shrink-0 border border-red-500/10 text-xs" data-task-id="${escapeAttr(t.id)}" title="Hapus Tugas Master">🗑️</button>
+          </div>`;
+      }).join('');
+      
+      container.querySelectorAll('.manage-delete-btn').forEach(btn => { 
+        btn.addEventListener('click', () => handleDeleteTask(btn.dataset.taskId)); 
+      });
+    }
+    populateManageCategories();
+  }
+
+  async function handleAddTask() {
+    if (isAddingTask) return;
+    const name = document.getElementById('newTaskName').value.trim(), freq = document.getElementById('newTaskFreq').value, cat = document.getElementById('newTaskCategory').value.trim(), spec = document.getElementById('newTaskSpec').value.trim();
+    if (!name) return showToast('Harap isikan nama kegiatan checklist!', 'error');
+    
+    isAddingTask = true;
+    const btn = document.getElementById('addMasterTaskBtn'); 
+    btn.disabled = true; 
+    btn.innerHTML = '<span class="spinner"></span> Mengirim...';
+    
+    const newTask = { id: uid(), KEGIATAN: name, JENIS: freq, KATEGORI: cat, SPESIFIKASI: spec };
+    state.tasks.push(newTask); 
+    saveState();
+    
+    try {
+      if (state.settings.webAppUrl) {
+        const result = await apiCall('add_task', { task: newTask });
+        if (!result || !result.ok) showToast('Tersimpan di lokal. Gagal menyinkronkan ke cloud.', 'warning'); 
+        else showToast('✓ Tugas master berhasil ditambahkan ke Sheets!', 'success');
+      } else { 
+        showToast('✓ Tugas master berhasil ditambahkan secara lokal!', 'success'); 
+      }
+    } catch (e) { 
+      showToast('Tersimpan lokal.', 'warning'); 
+    } finally {
+      document.getElementById('newTaskName').value = ''; 
+      document.getElementById('newTaskCategory').value = ''; 
+      document.getElementById('newTaskSpec').value = '';
+      isAddingTask = false; 
+      btn.disabled = false; 
+      btn.innerHTML = '+ Daftarkan Tugas Baru'; 
+      renderManageTasks(); 
+      render();
+    }
+  }
+
+  async function handleDeleteTask(id) {
+    const task = state.tasks.find(t => !isSameId(t.id, id)); 
+    showCustomConfirm('Hapus Tugas Master', `Apakah Anda yakin ingin menghapus tugas master ini? Seluruh histori log kegiatan yang terikat tidak akan terpengaruh namun checklist harian akan dinonaktifkan.`, true, async () => {
+      state.tasks = state.tasks.filter(t => !isSameId(t.id, id)); 
+      saveState();
+      try {
+        if (state.settings.webAppUrl) {
+          const result = await apiCall('delete_task', { id: id });
+          if (!result || !result.ok) showToast('Dihapus dari lokal, sinkronisasi cloud gagal.', 'warning'); 
+          else showToast('✓ Tugas master berhasil terhapus dari Sheets!', 'success');
+        } else { 
+          showToast('✓ Tugas master berhasil terhapus!', 'success'); 
+        }
+      } catch (e) { 
+        showToast('Terhapus lokal.', 'warning'); 
+      }
+      renderManageTasks(); 
+      render();
+    });
+  }
+
+  function renderCabangs() {
+    const container = document.getElementById('cabangList'), empty = document.getElementById('cabangEmpty');
+    if (!state.cabangs) state.cabangs = [];
+    if (state.cabangs.length === 0) { 
+      container.innerHTML = ''; 
+      empty.classList.remove('hidden'); 
+    } else {
+      empty.classList.add('hidden');
+      container.innerHTML = state.cabangs.map((c, index) => {
+        const pswMasked = c.PSW_CABANG ? '•'.repeat(8) : 'Tidak ada';
+        return `
+          <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-850 flex justify-between items-center gap-2">
+            <div class="flex-1 min-w-0">
+              <div class="font-bold text-xs sm:text-sm text-slate-100 truncate">${escapeHtml(c.NAMA_CABANG)}</div>
+              <div class="flex gap-2 items-center text-[10px] text-purple-400 font-mono mt-1 font-semibold">
+                <span>ID: ${escapeHtml(c.ID_CABANG)}</span>
+                <span class="text-slate-600">•</span>
+                <span class="text-slate-400">PSW: <span class="tracking-widest font-sans">${pswMasked}</span></span>
+              </div>
+            </div>
+            <div class="flex gap-1.5 shrink-0">
+              <button type="button" class="w-8 h-8 rounded-lg bg-indigo-950/40 text-indigo-400 hover:bg-indigo-600 hover:text-white flex items-center justify-center transition border border-indigo-500/10 text-xs" onclick="editCabang('${escapeAttr(c.ID_CABANG)}')" title="Ubah Cabang">✏️</button>
+              <button type="button" class="w-8 h-8 rounded-lg bg-red-950/40 text-red-400 hover:bg-red-600 hover:text-white flex items-center justify-center transition border border-red-500/10 text-xs" onclick="deleteCabang('${escapeAttr(c.ID_CABANG)}')" title="Hapus Cabang">🗑️</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+  }
+
+  async function saveCabang() {
+    if (isSavingCabang) return;
+    const idVal = document.getElementById('newCabangId').value.trim(), nameVal = document.getElementById('newCabangName').value.trim(), pswVal = document.getElementById('newCabangPsw').value.trim(), editIndex = document.getElementById('editCabangIndex').value;
+    if (!idVal || !nameVal) { showToast('ID Cabang dan Nama Kantor wajib diisi!', 'error'); return; }
+    
+    isSavingCabang = true;
+    const saveBtn = document.getElementById('saveCabangBtn'), origText = saveBtn.innerHTML;
+    saveBtn.disabled = true; 
+    saveBtn.innerHTML = '<span class="spinner"></span> Menyimpan...';
+    
+    if (!state.cabangs) state.cabangs = [];
+    const isEdit = editIndex !== "";
+
+    const isExist = state.cabangs.some((c, idx) => { 
+      if (isEdit) return idx !== parseInt(editIndex, 10) && isSameId(c.ID_CABANG, idVal); 
+      else return isSameId(c.ID_CABANG, idVal); 
+    });
+    
+    if (isExist) { 
+      showToast(`⚠️ ID Cabang "${idVal}" sudah digunakan oleh cabang terdaftar!`, 'error'); 
+      isSavingCabang = false; 
+      saveBtn.disabled = false; 
+      saveBtn.innerHTML = origText; 
+      return; 
+    }
+
+    if (isEdit) {
+      const oldId = state.cabangs[parseInt(editIndex, 10)].ID_CABANG;
+      state.cabangs[parseInt(editIndex, 10)] = { ID_CABANG: idVal, NAMA_CABANG: nameVal, PSW_CABANG: pswVal };
+      saveState();
+      
+      if (state.settings.webAppUrl) {
+        showToast('Menyinkronkan perubahan ke Google Sheets...', 'info');
+        try {
+          const result = await apiCall('update_cabang', { oldId: oldId, cabang: { ID_CABANG: idVal, NAMA_CABANG: nameVal, PSW_CABANG: pswVal } });
+          if (result && result.ok) showToast('✓ Data cabang berhasil disinkronkan ke Sheets!', 'success'); 
+          else showToast('Terupdate secara lokal.', 'warning');
+        } catch (err) { 
+          showToast('Terupdate lokal.', 'warning'); 
+        }
+      } else { 
+        showToast('✓ Kantor Cabang berhasil diperbarui secara lokal!', 'success'); 
+      }
+    } else {
+      state.cabangs.push({ ID_CABANG: idVal, NAMA_CABANG: nameVal, PSW_CABANG: pswVal });
+      saveState();
+      
+      if (state.settings.webAppUrl) {
+        showToast('Mengirim kantor cabang baru ke Sheets...', 'info');
+        try {
+          const result = await apiCall('add_cabang', { cabang: { ID_CABANG: idVal, NAMA_CABANG: nameVal, PSW_CABANG: pswVal } });
+          if (result && result.ok) showToast('✓ Kantor cabang baru berhasil disimpan ke Sheets!', 'success'); 
+          else showToast('Tersimpan di lokal.', 'warning');
+        } catch (err) { 
+          showToast('Tersimpan lokal.', 'warning'); 
+        }
+      } else { 
+        showToast('✓ Kantor cabang baru terdaftar!', 'success'); 
+      }
+    }
+    
+    resetCabangForm(); 
+    renderCabangs(); 
+    render(); 
+    isSavingCabang = false; 
+    saveBtn.disabled = false; 
+    saveBtn.innerHTML = origText;
+  }
+
+  function editCabang(id) {
+    const index = state.cabangs.findIndex(c => isSameId(c.ID_CABANG, id)); 
+    if (index === -1) return;
+    const target = state.cabangs[index];
+    
+    document.getElementById('newCabangId').value = target.ID_CABANG; 
+    document.getElementById('newCabangName').value = target.NAMA_CABANG; 
+    document.getElementById('newCabangPsw').value = target.PSW_CABANG || '';
+    document.getElementById('editCabangIndex').value = index;
+    
+    document.getElementById('cabangFormTitle').textContent = '✏️ Edit Database Cabang'; 
+    document.getElementById('cancelEditCabangBtn').classList.remove('hidden'); 
+    document.getElementById('newCabangId').focus();
+  }
+
+  function resetCabangForm() {
+    document.getElementById('newCabangId').value = ''; 
+    document.getElementById('newCabangName').value = ''; 
+    document.getElementById('newCabangPsw').value = '';
+    document.getElementById('editCabangIndex').value = '';
+    document.getElementById('cabangFormTitle').textContent = '➕ Tambah Cabang Baru'; 
+    document.getElementById('cancelEditCabangBtn').classList.add('hidden');
+  }
+
+  function deleteCabang(id) {
+    const target = state.cabangs.find(c => isSameId(c.ID_CABANG, id)); 
+    if (!target) return;
+    showCustomConfirm('Hapus Kantor Cabang', `Apakah Anda yakin ingin menghapus kantor cabang "${target.NAMA_CABANG}" (${target.ID_CABANG})?`, true, async () => {
+      state.cabangs = state.cabangs.filter(c => !isSameId(c.ID_CABANG, id)); 
+      saveState(); 
+      showToast('Cabang dihapus secara lokal.', 'info'); 
+      renderCabangs(); 
+      render(); 
+      
+      if (state.settings.webAppUrl) {
+        try { 
+          const result = await apiCall('delete_cabang', { ID_CABANG: id }); 
+          if (result && result.ok) showToast('✓ Sinkronisasi penghapusan ke Sheets Berhasil!', 'success'); 
+          else showToast('Dihapus lokal. Gagal menyinkronkan ke cloud.', 'warning'); 
+        } catch (err) { 
+          showToast('Jaringan sibuk.', 'warning'); 
+        }
+      }
+    });
+  }
+
+  document.getElementById('saveCabangBtn').addEventListener('click', saveCabang);
+  document.getElementById('cancelEditCabangBtn').addEventListener('click', resetCabangForm);
+
+  const tabGoogleSheetBtn = document.getElementById('tabGoogleSheetBtn'), tabCabangBtn = document.getElementById('tabCabangBtn'), subMenuGoogleSheet = document.getElementById('subMenuGoogleSheet'), subMenuCabang = document.getElementById('subMenuCabang');
+  
+  function switchToGoogleSheetTab() {
+    tabGoogleSheetBtn.className = 'flex-1 py-3 text-xs md:text-sm font-extrabold text-center rounded-xl transition-all duration-200 tab-active';
+    tabCabangBtn.className = 'flex-1 py-3 text-xs md:text-sm font-bold text-center rounded-xl transition-all duration-200 text-slate-400 hover:text-white';
+    subMenuGoogleSheet.classList.remove('hidden'); 
+    subMenuCabang.classList.add('hidden');
+  }
+  
+  function switchToCabangTab() {
+    tabCabangBtn.className = 'flex-1 py-3 text-xs md:text-sm font-extrabold text-center rounded-xl transition-all duration-200 tab-active';
+    tabGoogleSheetBtn.className = 'flex-1 py-3 text-xs md:text-sm font-bold text-center rounded-xl transition-all duration-200 text-slate-400 hover:text-white';
+    subMenuGoogleSheet.classList.add('hidden'); 
+    subMenuCabang.classList.remove('hidden');
+    
+    const alertEl = document.getElementById('cabangLocalAlert'); 
+    if (alertEl) { 
+      if (!state.settings.webAppUrl) alertEl.classList.remove('hidden'); 
+      else alertEl.classList.add('hidden'); 
+    }
+    renderCabangs();
+  }
+  
+  if (tabGoogleSheetBtn && tabCabangBtn) { 
+    tabGoogleSheetBtn.addEventListener('click', switchToGoogleSheetTab); 
+    tabCabangBtn.addEventListener('click', switchToCabangTab); 
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => { 
+    btn.addEventListener('click', () => { 
+      state.activeTab = btn.dataset.freq; 
+      state.activeCategory = 'all'; 
+      saveState(); 
+      render(); 
+    }); 
+  });
+
+  document.getElementById('recordBtn').addEventListener('click', openRecordModal);
+  document.querySelector('.close-record').addEventListener('click', () => safeCloseModal('recordModal'));
+  document.getElementById('cancelRecord').addEventListener('click', () => safeCloseModal('recordModal'));
+  document.querySelector('.close-completion').addEventListener('click', () => safeCloseModal('taskCompletionModal'));
+  document.getElementById('cancelCompletion').addEventListener('click', () => safeCloseModal('taskCompletionModal'));
+  document.getElementById('closeCompletionView').addEventListener('click', () => safeCloseModal('taskCompletionModal'));
+
+  document.getElementById('refreshRecordBtn').addEventListener('click', async () => {
+    if (!state.settings.webAppUrl) { showToast('Konfigurasi URL Google Sheets belum diatur.', 'warning'); return; }
+    const btn = document.getElementById('refreshRecordBtn'), icon = document.getElementById('refreshIcon');
+    icon.classList.add('syncing'); 
+    btn.disabled = true; 
+    document.getElementById('recordLoadingAlert').classList.remove('hidden');
+    
+    const tasksRes = await apiGet('list_tasks');
+    if (applyTasksResponse(tasksRes)) { 
+      saveState(); 
+      refreshRecordCategoryOptions(true); 
+      renderKegiatanDropdown(); 
+      showToast('Data kategori checklist berhasil diperbarui.', 'success'); 
+    } else { 
+      showToast('Gagal memuat ulang data kegiatan terbaru dari Web App.', 'error'); 
+    }
+    document.getElementById('recordLoadingAlert').classList.add('hidden'); 
+    icon.classList.remove('syncing'); 
+    btn.disabled = false;
+  });
+
+  document.getElementById('goManageFromRecord').addEventListener('click', () => { 
+    safeCloseModal('recordModal'); 
+    setTimeout(() => document.getElementById('manageBtn').click(), 50);
+  });
+  
+  document.getElementById('recordCategory').addEventListener('change', e => { 
+    recordState.selectedCategory = e.target.value; 
+    recordState.selectedTaskId = null; 
+    closeKegiatanDropdown(); 
+    renderKegiatanDropdown(); 
+  });
+  
+  document.getElementById('kegiatanTrigger').addEventListener('click', (e) => { 
+    e.preventDefault(); 
+    e.stopPropagation(); 
+    toggleKegiatanDropdown(); 
+  });
+  
+  document.getElementById('recordDetail').addEventListener('input', e => { 
+    recordState.detail = e.target.value; 
+  });
+  document.getElementById('saveRecord').addEventListener('click', saveRecord);
+
+  document.getElementById('historyBtn').addEventListener('click', () => { 
+    renderHistory(); 
+    showModalWithHistory('historyModal'); 
+  });
+  document.querySelector('.close-history').addEventListener('click', () => { 
+    safeCloseModal('historyModal'); 
+  });
+  
+  document.getElementById('manageBtn').addEventListener('click', () => { 
+    renderManageTasks(); 
+    showModalWithHistory('manageModal'); 
+  });
+  document.getElementById('goManageBtn').addEventListener('click', () => { 
+    document.getElementById('manageBtn').click(); 
+  });
+  document.querySelector('.close-manage').addEventListener('click', () => { 
+    safeCloseModal('manageModal'); 
+  });
+  document.getElementById('addMasterTaskBtn').addEventListener('click', handleAddTask);
+  document.getElementById('newTaskName').addEventListener('keydown', e => { if (e.key === 'Enter') handleAddTask(); });
+
+  document.getElementById('settingsBtn').addEventListener('click', () => {
+    document.getElementById('scriptCode').textContent = APPS_SCRIPT_CODE;
+    document.getElementById('webAppUrl').value = state.settings.webAppUrl || '';
+    document.getElementById('connectionStatus').innerHTML = '';
+    document.getElementById('diagnosticArea').classList.add('hidden');
+    switchToGoogleSheetTab(); 
+    updateConnectionUI();
+    showModalWithHistory('settingsModal');
+  });
+  document.querySelector('.close-settings').addEventListener('click', () => { 
+    safeCloseModal('settingsModal'); 
+  });
+
+  document.getElementById('copyScriptBtn').addEventListener('click', async () => {
+    try { 
+      await navigator.clipboard.writeText(APPS_SCRIPT_CODE); 
+      showToast('Script disalin ke clipboard!', 'success'); 
+    } catch (e) {
+      const textArea = document.createElement("textarea"); 
+      textArea.value = APPS_SCRIPT_CODE; 
+      document.body.appendChild(textArea); 
+      textArea.select();
+      try { 
+        document.execCommand('copy'); 
+        showToast('Script disalin ke clipboard!', 'success'); 
+      } catch (err) { 
+        showToast('Gagal menyalin otomatis.', 'error'); 
+      } 
+      document.body.removeChild(textArea);
+    }
+  });
+
+  document.getElementById('saveSettings').addEventListener('click', async () => {
+    const url = document.getElementById('webAppUrl').value.trim();
+    if (!url) { showToast('Harap isikan URL Web App terlebih dahulu.', 'error'); return; }
+    state.settings.webAppUrl = url; 
+    saveSettings(); 
+    updateConnectionUI();
+    
+    const alertEl = document.getElementById('cabangLocalAlert'); 
+    if (alertEl) alertEl.classList.add('hidden');
+    
+    showToast('✓ Konfigurasi disimpan. Menjalankan penyelarasan cloud...', 'success');
+    await syncAll(); 
+    render(); 
+    renderCabangs();
+    setTimeout(() => { safeCloseModal('settingsModal'); }, 1200);
+  });
+
+  document.getElementById('disconnectSettings').addEventListener('click', () => {
+    showCustomConfirm('Putuskan Integrasi', 'Aplikasi akan kembali berjalan murni secara offline (Mode Lokal) dan tidak menyelaraskan data ke Google Sheets.', true, () => {
+      state.settings.webAppUrl = ''; 
+      saveSettings(); 
+      document.getElementById('webAppUrl').value = ''; 
+      updateConnectionUI();
+      showToast('Integrasi terputus. Mode lokal offline aktif.', 'info'); 
+      render(); 
+      renderCabangs();
+    });
+  });
+
+  document.getElementById('testConnection').addEventListener('click', runDiagnostics);
+
+  document.getElementById('syncBtn').addEventListener('click', async () => {
+    if (!state.settings.webAppUrl) { showToast('Silakan setup tautan integrasi Google Sheets terlebih dahulu.', 'error'); return; }
+    const icon = document.getElementById('syncIcon'); 
+    icon.classList.add('syncing');
+    const ok = await syncAll(); 
+    icon.classList.remove('syncing');
+    
+    if (ok) { 
+      showToast('✓ Sinkronisasi Cloud Berhasil!', 'success'); 
+      render(); 
+      renderCabangs(); 
+    } else { 
+      showToast('Gagal melakukan sinkronisasi otomatis. Silakan jalankan diagnostik jaringan.', 'error'); 
+    }
+  });
+
+  document.getElementById('activeBranchSelector').addEventListener('change', (e) => { 
+    Storage.set('active_branch_id', e.target.value); 
+    showToast(`Cabang aktif berpindah ke: ${e.target.value}`, 'success'); 
+    render(); // Menggambar ulang antarmuka & menghitung ulang statistik untuk cabang yang baru terpilih
+  });
+
+  // Filter Search Input Listener
+  document.getElementById('taskSearchInput').addEventListener('input', e => {
+    state.searchQuery = e.target.value;
+    render();
+  });
+
+  // Status Filter Listener
+  document.querySelectorAll('.status-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.statusFilter = btn.dataset.status;
+      render();
+    });
+  });
+
+  // LIGHTBOX & BACK BUTTON LOGIC
+  window.openMediaViewer = function(url) {
+    const img = document.getElementById('photoViewerImg');
+    const vid = document.getElementById('videoViewerVid');
+    const dl = document.getElementById('downloadPhotoBtn');
+
+    dl.href = url;
+
+    if (isVideoMedia(url)) {
+      img.classList.add('hidden');
+      vid.classList.remove('hidden');
+      vid.src = url;
+      vid.play().catch(e => console.warn("Auto-play diblokir browser:", e));
+    } else {
+      vid.classList.add('hidden');
+      vid.pause();
+      vid.src = '';
+      img.classList.remove('hidden');
+      img.src = url;
+    }
+
+    showModalWithHistory('photoViewerModal');
+  };
+
+  document.getElementById('closePhotoViewerBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    safeCloseModal('photoViewerModal');
+  });
+
+  // Modal Backdrop Clicks (Klik layar gelap untuk tutup menu)
+  ALL_MODALS.forEach(id => { 
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('click', e => { 
+        if (e.target.id === id || (id === 'photoViewerModal' && e.target.id === 'photoViewerImg')) {
+           safeCloseModal(id);
+        }
+      }); 
+    }
+  });
+
+  // Escape Key Listener untuk Keyboard PC/Laptop
+  document.addEventListener('keydown', e => { 
+    if (e.key !== 'Escape') return; 
+    if (history.state && history.state.modal) {
+      safeCloseModal(history.state.modal);
+    } else {
+      ALL_MODALS.forEach(id => hideModal(id));
+    }
+  });
+
+  // Initialize
+  loadState();
+  render();
+  renderCabangs();
+  startGpsTracking();
+  silentBackgroundSync();
   </script>
+
 </body>
 </html>
