@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- META TAGS PROGRESSIVE WEB APP (PWA) -->
+  <meta name="theme-color" content="#0b0f19" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="DBMS Checklist" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="https://wsrv.nl/?url=https://drive.google.com/thumbnail?id=1sdbS2eKxEgaw-W9LFKrE2g6ZTsE8bcLp&w=192&h=192&fit=contain" />
+  <link rel="icon" type="image/png" href="https://wsrv.nl/?url=https://drive.google.com/thumbnail?id=1sdbS2eKxEgaw-W9LFKrE2g6ZTsE8bcLp&w=192&h=192&fit=contain" />
+
   <title>DBMS Daily Checklist - Bank BTN</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.0.3/index.min.css" />
@@ -16,6 +26,7 @@
         radial-gradient(at bottom left, rgba(99, 102, 241, 0.08) 0px, transparent 40%);
       min-height: 100vh;
       color: #f1f5f9;
+      -webkit-tap-highlight-color: transparent; /* Optimasi sentuhan iOS */
     }
     .glass {
       background: rgba(17, 24, 39, 0.7);
@@ -199,7 +210,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30 antialiased">
 
-  <div class="max-w-5xl mx-auto px-4 py-6 md:py-10 relative">
+  <div class="max-w-5xl mx-auto px-4 py-6 md:py-10 relative pt-[safe-area-inset-top] pb-[safe-area-inset-bottom]">
     
     <!-- HEADER -->
     <header class="mb-8 fade-in">
@@ -227,6 +238,12 @@
 
         <!-- Action Panel -->
         <div class="flex items-center gap-2 flex-wrap">
+          <!-- Tombol PWA Instalasi Cepat (Disembunyikan secara default, ditampilkan lewat JS jika support) -->
+          <button id="installAppBtn" class="hidden bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-200 items-center gap-2 shadow-lg hover:shadow-amber-950/30 border border-transparent">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            Install App
+          </button>
+          
           <button id="recordBtn" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-emerald-950/30">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
             Catat Aktivitas
@@ -2800,7 +2817,72 @@ function handleRequest(e) {
     }
   });
 
-  // Initialize
+  // =========================================================
+  // PWA SETUP (MANIFEST & SERVICE WORKER)
+  // =========================================================
+  const pwaIconUrl = "https://wsrv.nl/?url=https://drive.google.com/thumbnail?id=1sdbS2eKxEgaw-W9LFKrE2g6ZTsE8bcLp&w=192&h=192&fit=contain";
+  const manifestJSON = {
+    name: "DBMS Daily Checklist - Bank BTN",
+    short_name: "DBMS Checklist",
+    description: "Aplikasi pencatatan checklist harian DBMS Bank BTN",
+    start_url: location.href.split('?')[0],
+    display: "standalone",
+    background_color: "#0b0f19",
+    theme_color: "#0b0f19",
+    icons: [
+      { src: pwaIconUrl, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+      { src: pwaIconUrl, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+    ]
+  };
+  
+  // Inject Manifest
+  const manifestBlob = new Blob([JSON.stringify(manifestJSON)], {type: 'application/json'});
+  const manifestURL = URL.createObjectURL(manifestBlob);
+  const manifestLink = document.createElement('link');
+  manifestLink.rel = 'manifest';
+  manifestLink.href = manifestURL;
+  document.head.appendChild(manifestLink);
+
+  // Catatan: Service Worker tidak dapat diregistrasi menggunakan Blob URL di browser modern demi keamanan.
+  // Jika Anda meng-hosting file HTML ini di server web (seperti GitHub Pages, Vercel, dll), 
+  // Anda harus membuat file 'sw.js' terpisah di direktori yang sama dan mengaktifkan kode di bawah ini:
+  /*
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('PWA Service Worker terdaftar'))
+        .catch(err => console.error('PWA SW error:', err));
+    });
+  }
+  */
+
+  // PWA Install Prompt Logic
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const installBtn = document.getElementById('installAppBtn');
+    if (installBtn) {
+      installBtn.classList.remove('hidden');
+      installBtn.classList.add('flex');
+    }
+  });
+
+  const installBtnEl = document.getElementById('installAppBtn');
+  if (installBtnEl) {
+    installBtnEl.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        installBtnEl.classList.add('hidden');
+        installBtnEl.classList.remove('flex');
+      }
+      deferredPrompt = null;
+    });
+  }
+
+  // Initialize App
   loadState();
   render();
   renderCabangs();
